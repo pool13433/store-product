@@ -11,7 +11,7 @@
                 <th>ลำดับ</th>
                 <th>ชื่อ</th>
                 <th>ระยะเวลา</th>
-                <th>วันที่สร้าง</th>
+                <th>วันที่แก้ไข</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -26,7 +26,7 @@
                     <td><?=$row['pay_id']?></td>
                     <td><?=$row['pay_name']?></td>
                     <td><?=$row['pay_time']?></td>
-                    <td><?=$row['pay_createdate']?></td>
+                    <td><?=  change_dateYMD_TO_DMY($row['pay_updatedate'])?></td>
                     <td><a href="index.php?page=form_pay_condition&id=<?=$row['pay_id']?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
                     <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?=$row['pay_id']?>,'../database/db_pay_condition.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
@@ -35,4 +35,7 @@
     </table>
 
 </div>
-
+<?php
+if (!empty($conn))
+    mysql_close ($conn);
+?>

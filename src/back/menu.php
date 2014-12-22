@@ -5,6 +5,7 @@
         <li class="uk-nav-divider"></li>
         <li class="uk-nav-header">ตั้งค่า</li>
         <li>
+            <a href="index.php?page=manage_prefix"><i class="uk-icon-users"></i> จัดการคำนำหน้าชื่อ</a> 
             <a href="index.php?page=manage_person"><i class="uk-icon-users"></i> จัดการผู้ใช้งาน</a> 
             <a href="index.php?page=manage_store_contact"><i class="uk-icon-mobile"></i> จัดการร้านค้าติดต่อ</a> 
             <a href="index.php?page=manage_pay_condition"><i class="uk-icon-money"></i> จัดการระยะเวลาการจ่ายเงิน</a> 

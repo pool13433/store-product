@@ -14,6 +14,7 @@
                 <th>โทรศัพท์</th>
                 <th>อีเมลล์</th>
                 <th>สถานะ</th>
+                <th>วันที่แก้ไข</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -32,6 +33,7 @@
                     <td><?=$row['per_mobile']?></td>
                     <td><?=$row['per_email']?></td>
                     <td><?=  Get_PersonStatus($row['per_status'])?></td>
+                    <td><?=  change_dateYMD_TO_DMY($row['per_updatedate'])?></td>
                     <td><a href="index.php?page=form_person&id=<?=$row['per_id']?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
                     <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?=$row['per_id']?>,'../database/db_person.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
@@ -40,4 +42,7 @@
     </table>
 
 </div>
-
+<?php
+if (!empty($conn))
+    mysql_close ($conn);
+?>

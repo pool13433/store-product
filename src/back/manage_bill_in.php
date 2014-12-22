@@ -10,7 +10,7 @@
                 <th>ลำดับ</th>
                 <th>ชื่อ</th>
                 <th>อธิบาย</th>
-                <th>วันที่สร้าง</th>
+                <th>วันที่แก้ไข/สร้าง</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -25,7 +25,7 @@
                     <td><?= $row['billin_id'] ?></td>
                     <td><?= $row['billin_invoicescode'] ?></td>
                     <td><?= $row['billin_taxcode'] ?></td>
-                    <td><?= $row['billin_createdate'] ?></td>
+                    <td><?= change_dateYMD_TO_DMY($row['billin_updatedate']) ?></td>
                     <td><a href="index.php?page=form_bill_in&id=<?= $row['billin_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
                     <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['billin_id'] ?>, '../database/db_bill_in.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
@@ -34,4 +34,7 @@
     </table>
 
 </div>
-
+<?php
+if (!empty($conn))
+    mysql_close($conn);
+?>

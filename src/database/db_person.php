@@ -1,10 +1,11 @@
 <?php
 
-session_start();
+@session_start();
 include '../config/Website.php';
 include '../config/Connect.php';
 // ######### url ?method=? ###########
-
+$person = $_SESSION['person'];
+$per_id = $person['per_id'];
 switch ($_GET['method']) {
     case 'login':
         $username = $_POST['username'];
@@ -49,10 +50,10 @@ switch ($_GET['method']) {
 
         $sql = "INSERT INTO person (per_username,per_password,";
         $sql .= " per_fname,per_lname,per_address,";
-        $sql .= " per_mobile,per_email,per_createdate)values(";
+        $sql .= " per_mobile,per_email,per_createdate,per_createby,per_updatedate,per_updateby)values(";
         $sql .= " '$username','$password', ";
         $sql .= " '$fname','$lname','$address',";
-        $sql .= " '$mobile','$email',NOW())";
+        $sql .= " '$mobile','$email',NOW(),0,NOW(),0)";
         $sql .= " ";
         $query = mysql_query($sql) or die(mysql_error());
         $row = mysql_affected_rows();
@@ -72,6 +73,7 @@ switch ($_GET['method']) {
     case 'create':
         if (!empty($_POST)) {
             $id = $_POST['id'];
+            $prefix = $_POST['prefix'];
             $code = $_POST['code'];
             $username = $_POST['username'];
             $password = $_POST['password'];
@@ -83,15 +85,18 @@ switch ($_GET['method']) {
             $email = $_POST['email'];
             $status = $_POST['status'];
             if (empty($_POST['id'])) { // new person
-                $sql = "INSERT INTO person (per_code,per_username,per_password,";
+                $sql = "INSERT INTO person (pre_id,per_code,per_username,per_password,";
                 $sql .= " per_fname,per_lname,per_address,";
-                $sql .= " per_mobile,per_email,per_createdate,per_status)values(";
-                $sql .= " '$code','$username','$password', ";
+                $sql .= " per_mobile,per_email,per_createdate,per_createby,";
+                $sql .= " per_updatedate,per_updateby,per_status)values(";
+                $sql .= " $prefix,'$code','$username','$password', ";
                 $sql .= " '$fname','$lname','$address',";
-                $sql .= " '$mobile','$email',NOW(),$status)";
+                $sql .= " '$mobile','$email',NOW(),$per_id,";
+                $sql .= " NOW(),$per_id,$status)";
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
             } else { //edit person
                 $sql = " UPDATE person SET";
+                $sql .= " pre_id = $prefix,";
                 $sql .= " per_code = '$code',";
                 $sql .= " per_username = '$username',";
                 $sql .= " per_password = '$password',";
@@ -101,9 +106,10 @@ switch ($_GET['method']) {
                 $sql .= " per_mobile = '$mobile',";
                 $sql .= " per_email = '$email',";
                 $sql .= " per_status = $status,";
-                $sql .= " per_createdate = NOW()";
+                $sql .= " per_updatedate = NOW(),";
+                $sql .= " per_updateby = $per_id";
                 $sql .= " WHERE per_id = $id";
-                $msg = "แก้ไขข้อมูลเข้าระบบสำเร็จ";
+                $msg = "แก้ไขข้อมูล สำเร็จ";
             }
             //echo 'sql : '.$sql;
             $query = mysql_query($sql) or die(mysql_error());

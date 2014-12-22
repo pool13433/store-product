@@ -1,6 +1,7 @@
 <?php
 include '../config/Connect.php';
 $id = "";
+$prefix = "";
 $code = "";
 $username = "";
 $password = "";
@@ -16,6 +17,7 @@ if (!empty($_GET['id'])) {
     $query = mysql_query($sql) or die(mysql_error());
     $data = mysql_fetch_assoc($query);
     $id = $data['per_id'];
+    $prefix = $data['pre_id'];
     $code = $data['per_code'];
     $username = $data['per_username'];
     $password = $data['per_password'];
@@ -74,6 +76,12 @@ if (empty($code)) {
         </fieldset>
         <fieldset data-uk-margin>
             <legend>กรอกข้อมูลส่วนตัว</legend>
+            <div class="uk-form-row">
+                <label for="input-code" class="uk-form-label">คำนำหน้าชื่อ</label>
+                <div class="uk-form-controls">
+                    <?php include '../config/dropdown_prefix.php';?>
+                </div>
+            </div>
             <div class="uk-form-row">
                 <label for="input-code" class="uk-form-label">CODE</label>
                 <div class="uk-form-controls">
