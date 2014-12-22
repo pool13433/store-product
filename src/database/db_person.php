@@ -4,8 +4,13 @@
 include '../config/Website.php';
 include '../config/Connect.php';
 // ######### url ?method=? ###########
-$person = $_SESSION['person'];
-$per_id = $person['per_id'];
+$person = "";
+$per_id = "";
+if (!empty($_SESSION['person'])):
+    $person = $_SESSION['person'];
+    $per_id = $person['per_id'];
+endif;
+
 switch ($_GET['method']) {
     case 'login':
         $username = $_POST['username'];
