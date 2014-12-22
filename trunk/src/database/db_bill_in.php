@@ -1,8 +1,9 @@
 <?php
-
+@session_start();
 include '../config/Connect.php';
 include '../config/Website.php';
-
+$person = $_SESSION['person'];
+$per_id = $person['per_id'];
 switch ($_GET['method']) {
     case 'create':
 //{"tax_code":"11","Invoices_code":"0000000001","in_date":"02/12/2014",
@@ -39,14 +40,14 @@ switch ($_GET['method']) {
             $sql_bill .= " `officer_id`, `billin_localtioncode`,";
             $sql_bill .= " `billin_weight`, `billin_pricebeforevat`, `billin_vat`,";
             $sql_bill .= " `billin_priceaftervat`, `billin_sender`, `billin_receiver`, `billin_autherized`,";
-            $sql_bill .= " `billin_createdate`)VALUES(";
+            $sql_bill .= " `billin_createdate`,`billin_createby`,`billin_updatedate`,`billin_updateby`)VALUES(";
             $sql_bill .= " '$Invoices_code',";
             $sql_bill .= " '$tax_code','" . change_dateDMY_TO_YMD($in_date) . "','$store_id','$doc_code',";
             $sql_bill .= " '" . change_dateDMY_TO_YMD($doc_date) . "','$pay_condition','" . change_dateDMY_TO_YMD($finfish_date) . "','$pay_code',";
             $sql_bill .= " $officer_id,'$location',";
             $sql_bill .= " $weight,$pricebeforevat,$vat,$priceaftervat,";
             $sql_bill .= " '$receiver_name','$sender_name','$autherized_name',";
-            $sql_bill .= " NOW()";
+            $sql_bill .= " NOW(),$per_id,NOW(),$per_id";
             $sql_bill .= " )";
         } else {
             $sql_bill = " UPDATE bill_in SET ";
@@ -68,7 +69,8 @@ switch ($_GET['method']) {
             $sql_bill .= " `billin_sender`='$sender_name',";
             $sql_bill .= " `billin_receiver`='$receiver_name',";
             $sql_bill .= " `billin_autherized`='$autherized_name',";
-            $sql_bill .= " billin_createdate = NOW()";
+            $sql_bill .= " billin_updatedate = NOW(),";
+            $sql_bill .= " billin_updateby = $per_id";
             $sql_bill .= " WHERE billin_id = $bill_id";
         }
         //echo ' sql_bill : ' + $sql_bill;

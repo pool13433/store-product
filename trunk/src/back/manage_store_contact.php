@@ -14,6 +14,7 @@
                 <th>ชื่อเจ้าของ</th>
                 <th>ที่อยู่</th>
                 <th>ประเภท</th>
+                <th>วันที่แก้ไข</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -30,14 +31,17 @@
                     <td><?= $row['store_name'] ?></td>
                     <td><?= $row['store_desc'] ?></td>
                     <td><?= $row['store_onwer'] ?></td>
-                    <td><?= $row['store_address']?></td>
+                    <td><?= $row['store_address']?></td>                    
                     <td><?= Get_StoreContactStatus($row['store_type']) ?></td>
+                    <td><?= change_dateYMD_TO_DMY($row['store_updatedate'])?></td>
                     <td><a href="index.php?page=form_store_contact&id=<?= $row['store_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
                     <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['store_id'] ?>, '../database/db_store_contact.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
-
 </div>
-
+<?php
+if (!empty($conn))
+    mysql_close ($conn);
+?>

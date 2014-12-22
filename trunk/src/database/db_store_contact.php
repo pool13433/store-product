@@ -1,10 +1,11 @@
 <?php
 
-session_start();
+@session_start();
 include '../config/Website.php';
 include '../config/Connect.php';
 // ######### url ?method=? ###########
-
+$person = $_SESSION['person'];
+$per_id = $person['per_id'];
 switch ($_GET['method']) {
     case 'create':
         if (!empty($_POST)) {
@@ -18,9 +19,11 @@ switch ($_GET['method']) {
                 $code = $_POST['type'] . $_POST['code'];
                 $sql = " INSERT INTO store_contact(";
                 $sql .= " store_code,store_name,store_desc,store_onwer,";
-                $sql .= " store_address,store_type,store_createdate)VALUES(";
+                $sql .= " store_address,store_type,store_createdate,store_createby,";
+                $sql .= " store_updatedate,store_updateby)VALUES(";
                 $sql .= " '$code','$name','$desc','$onwer',";
-                $sql .= " '$address','$type',NOW()";
+                $sql .= " '$address','$type',NOW(),$per_id,";
+                $sql .= " NOW(),$per_id";
                 $sql .= " )";
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
             } else {
@@ -32,7 +35,8 @@ switch ($_GET['method']) {
                 $sql .= " store_onwer = '$onwer',";
                 $sql .= " store_address = '$address',";
                 $sql .= " store_type = '$type',";
-                $sql .= " store_createdate = NOW()";
+                $sql .= " store_updatedate = NOW(),";
+                $sql .= " store_updateby = $per_id";
                 $sql .= " WHERE store_id = $id";
                 $msg = "แก้ไขข้อมูลเข้าระบบสำเร็จ";
             }

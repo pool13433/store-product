@@ -1,8 +1,10 @@
 <?php
 
+@session_start();
 include '../config/Connect.php';
 include '../config/Website.php';
-
+$person = $_SESSION['person'];
+$per_id = $person['per_id'];
 switch ($_GET['method']) {
     case 'create':
         $form = json_decode($_POST['form'], true);
@@ -21,10 +23,12 @@ switch ($_GET['method']) {
         if (empty($form['bill_id'])) { //$form['bill_id']
             $sql_bill = " INSERT INTO `bill_out`(`billout_code`, `customer_id`,billout_outdate, ";
             $sql_bill .= " `officer_id`, `pay_id`, `billout_receiver`, `billout_sender`, ";
-            $sql_bill .= " `billout_createdate`, `billout_total`,billout_status) VALUES (";
+            $sql_bill .= " `billout_createdate`,`billout_createby`,";
+            $sql_bill .= " `billout_updatedate`,`billout_updateby``billout_total`,billout_status) VALUES (";
             $sql_bill .= " '$billcode',$customer_id,'" . change_dateDMY_TO_YMD($billdate) . "',";
             $sql_bill .= " $officer,$pay_condition,'$receiver','$sender',";
-            $sql_bill .= " NOW(),$totalprice,1)";
+            $sql_bill .= " NOW(),$per_id,";
+            $sql_bill .= " NOW(),$per_id,$totalprice,1)";
         } else {
             $sql_bill = " UPDATE `bill_out` SET ";
             $sql_bill .= " `billout_code`='$billcode',";
@@ -34,7 +38,8 @@ switch ($_GET['method']) {
             $sql_bill .= " `pay_id`=$pay_condition,";
             $sql_bill .= " `billout_receiver`='$receiver',";
             $sql_bill .= " `billout_sender`='$sender',";
-            $sql_bill .= " `billout_createdate`=NOW(),";
+            $sql_bill .= " `billout_updatedate`=NOW(),";
+            $sql_bill .= " `billout_updateby`= $per_id,";
             $sql_bill .= " `billout_total`=$totalprice";
             $sql_bill .= " WHERE `billout_id`= $bill_id";
         }
@@ -49,7 +54,7 @@ switch ($_GET['method']) {
             $list_product = json_decode($_POST['list_product'], true);
             if (count($list_product) > 0):
                 foreach ($list_product as $object):
-                    $billpro_id = $object['pro_id'];                    
+                    $billpro_id = $object['pro_id'];
                     $pro_name = $object['pro_name'];
                     $pro_code = $object['pro_code'];
                     $pro_nocount = $object['pro_nocount'];
@@ -131,7 +136,7 @@ switch ($_GET['method']) {
                         //$sql_bill_product .= " `billoutpro_id`=$,";
                         $sql_bill_product .= " `billoutpro_createdate`=NOW()";
                         $sql_bill_product .= " WHERE `billoutpro_id`= $billpro_id";
-                    }                    
+                    }
                     //echo ' [sql : '.$sql_bill_product." ]";
                     mysql_query($sql_bill_product) or die(mysql_error() . 'SQL : ' . $sql_bill_product);
 

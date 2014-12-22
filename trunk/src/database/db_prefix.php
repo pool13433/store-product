@@ -1,4 +1,5 @@
 <?php
+
 @session_start();
 include '../config/Website.php';
 include '../config/Connect.php';
@@ -10,22 +11,21 @@ switch ($_GET['method']) {
         if (!empty($_POST)) {
             $id = $_POST['id'];
             $name = $_POST['name'];
-            $time = $_POST['time'];
-            
+            $desc = $_POST['desc'];
+
             if (empty($_POST['id'])) {
-                $sql = " INSERT INTO pay_condition (";
-                $sql .= " pay_name,pay_time,pay_createdate,pay_createby,";
-                $sql .= " pay_updatedate,pay_updateby)VALUES(";
-                $sql .= " '$name',$time,NOW(),$per_id,";
-                $sql .= " NOW(),$per_id)";
+                $sql = " INSERT INTO prefix (";
+                $sql .= " pre_name,pre_desc,pre_createdate,pre_createby,pre_updatedate,pre_updateby)VALUES(";
+                $sql .= " '$name','$desc',NOW(),$per_id,NOW(),$per_id";
+                $sql .= " )";
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
             } else {
-                $sql = " UPDATE pay_condition SET ";
-                $sql .= " pay_name = '$name',";
-                $sql .= " pay_time = '$time',";
-                $sql .= " pay_updatedate = NOW(),";
-                $sql .= " pay_updateby = $per_id";
-                $sql .= " WHERE pay_id = $id";
+                $sql = " UPDATE prefix SET ";
+                $sql .= " pre_name = '$name',";
+                $sql .= " pre_desc = '$desc',";
+                $sql .= " pre_updatedate = NOW(),";
+                $sql .= " pre_updateby = $per_id";
+                $sql .= " WHERE pre_id = $id";
                 $msg = "แก้ไขข้อมูลเข้าระบบสำเร็จ";
             }
             //echo 'sql : '.$sql;
@@ -33,8 +33,8 @@ switch ($_GET['method']) {
             //$row = mysql_affected_rows();
             if ($query) {
                 $status = "success";
-                $title = "insert ok ";                
-                $url = "index.php?page=manage_pay_condition";
+                $title = "insert ok ";
+                $url = "index.php?page=manage_prefix";
             } else {
                 $status = "fail";
                 $title = "insert fail ";
@@ -47,12 +47,11 @@ switch ($_GET['method']) {
 
     case 'delete':
         $id = $_GET['id'];
-        $sql = "DELETE FROM pay_condition WHERE pay_id=$id";
+        $sql = "DELETE FROM prefix WHERE pre_id=$id";
         $query = mysql_query($sql) or die(mysql_error());
         if ($query)
             echo ReturnJson('success', '', 'ลบสำเร็จ', '');
         break;
-
     default:
         break;
 }
@@ -60,3 +59,4 @@ switch ($_GET['method']) {
 
 
     
+

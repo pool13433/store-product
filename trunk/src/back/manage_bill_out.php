@@ -11,6 +11,7 @@
                 <th>รหัส</th>
                 <th>ลูกค้า</th>
                 <th>เจ้าหน้าที่</th>
+                <th>วันที่แก้ไข/สร้าง</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -26,6 +27,7 @@
                     <td><?= $row['billout_code'] ?></td>
                     <td><?= $row['customer_id'] ?></td>
                     <td><?= $row['officer_id'] ?></td>
+                    <td><?= change_dateYMD_TO_DMY($row['billout_updatedate'])?></td>
                     <td><a href="index.php?page=form_bill_out&id=<?= $row['billout_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
                     <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['billout_id'] ?>, '../database/db_bill_out.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
@@ -34,4 +36,7 @@
     </table>
 
 </div>
-
+<?php
+if (!empty($conn))
+    mysql_close ($conn);
+?>

@@ -14,6 +14,7 @@
                 <th>จำนวน</th>
                 <th>ราคา</th>
                 <th>ส่วนลด</th>
+                <th>วันที่แก้ไข</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
             </tr>
@@ -32,6 +33,7 @@
                     <td><?=$row['pro_amount']?></td>
                     <td><?=$row['pro_unitprice']?></td>
                     <td><?=$row['pro_discount']?></td>
+                    <td><?=  change_dateYMD_TO_DMY($row['pro_updatedate'])?></td>
                     <td><a href="index.php?page=form_product&id=<?=$row['pro_id']?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
                     <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?=$row['pro_id']?>,'../database/db_product.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
@@ -40,5 +42,8 @@
     </table>
 
 </div>
-
+<?php
+if (!empty($conn))
+    mysql_close ($conn);
+?>
 

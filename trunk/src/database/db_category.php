@@ -1,10 +1,11 @@
 <?php
 
-session_start();
+@session_start();
 include '../config/Website.php';
 include '../config/Connect.php';
 // ######### url ?method=? ###########
-
+$person = $_SESSION['person'];
+$per_id = $person['per_id'];
 switch ($_GET['method']) {
     case 'create':
         if (!empty($_POST)) {
@@ -14,14 +15,16 @@ switch ($_GET['method']) {
             
             if (empty($_POST['id'])) {
                 $sql = " INSERT INTO category (";
-                $sql .= " cat_name,cat_desc,cat_createdate)VALUES(";
-                $sql .= " '$name','$desc',NOW()";
-                $sql .= " )";
+                $sql .= " cat_name,cat_desc,cat_createdate,cat_createby,";
+                $sql .= " cat_updatedate,cat_updateby)VALUES(";
+                $sql .= " '$name','$desc',NOW(),$per_id,";
+                $sql .= " NOW(),$per_id)";
             } else {
                 $sql = " UPDATE category SET ";
                 $sql .= " cat_name = '$name',";
                 $sql .= " cat_desc = '$desc',";
-                $sql .= " cat_createdate = NOW()";
+                $sql .= " cat_updatedate = NOW(),";
+                $sql .= " cat_updateby = $per_id";
                 $sql .= " WHERE cat_id = $id";
             }
             //echo 'sql : '.$sql;

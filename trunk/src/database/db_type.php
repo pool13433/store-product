@@ -1,10 +1,11 @@
 <?php
 
-session_start();
+@session_start();
 include '../config/Website.php';
 include '../config/Connect.php';
 // ######### url ?method=? ###########
-
+$person = $_SESSION['person'];
+$per_id = $person['per_id'];
 switch ($_GET['method']) {
     case 'create':
         if (!empty($_POST)) {
@@ -14,15 +15,17 @@ switch ($_GET['method']) {
 
             if (empty($_POST['id'])) {
                 $sql = " INSERT INTO type (";
-                $sql .= " type_name,type_desc,type_createdate)VALUES(";
-                $sql .= " '$name','$desc',NOW()";
+                $sql .= " type_name,type_desc,type_createdate,";
+                $sql .= " type_createby,type_updatedate,type_updateby)VALUES(";
+                $sql .= " '$name','$desc',NOW(),$per_id,NOW(),$per_id";
                 $sql .= " )";
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
             } else {
                 $sql = " UPDATE type SET ";
                 $sql .= " type_name = '$name',";
                 $sql .= " type_desc = '$desc',";
-                $sql .= " type_createdate = NOW()";
+                $sql .= " type_updatedate = NOW(),";
+                $sql .= " type_updateby = $per_id";
                 $sql .= " WHERE type_id = $id";
                 $msg = "แก้ไขข้อมูลเข้าระบบสำเร็จ";
             }
