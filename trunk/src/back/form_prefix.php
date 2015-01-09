@@ -28,7 +28,7 @@ if (!empty($_GET['id'])) {
                            data-errormessage-value-missing="กรุณากรอก ชื่อ" />
                 </div>
             </div>   
-            <div class="uk-form-row">
+            <!--<div class="uk-form-row">
                 <label for="input-desc" class="uk-form-label">อธิบาย</label>
                 <div class="uk-form-controls">
                     <textarea  rows="5" cols="50" name="desc" id="input-desc" 
@@ -36,7 +36,7 @@ if (!empty($_GET['id'])) {
                                data-errormessage-value-missing="คำอธิบาย" 
                                ><?= $desc ?></textarea>
                 </div>
-            </div>                                 
+            </div>-->                                 
             <div class="uk-form-row">
                 <div class="uk-form-controls">
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">

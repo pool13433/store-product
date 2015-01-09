@@ -20,6 +20,7 @@
             <a href="index.php?page=manage_category"><i class="uk-icon-wrench"></i> จัดการกลุ่มสินค้า</a> 
             <a href="index.php?page=manage_type"><i class="uk-icon-wrench"></i> จัดการชนิดสินค้า</a> 
             <a href="index.php?page=manage_product"><i class="uk-icon-gift"></i> จัดการสินค้า</a> 
+            <!-- <a href="index.php?page=manage_adjust"><i class="uk-icon-gift"></i> ปรับสมดุลสินค้า</a> -->
         </li>  
         <li class="uk-nav-divider"></li>
         <li>

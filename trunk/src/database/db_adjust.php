@@ -10,20 +10,32 @@ switch ($_GET['method']) {
     case 'adjust':
         $pro_balance = 0;
         $pro_id = $_POST['pro_id'];
+        $id = $_POST['id'];
         $pro_amount = $_POST['pro_amount'];
         $adj_no = $_POST['adj_no'];
         $adj_type = $_POST['adjust_type'];
         $adj_remark = $_POST['adj_remark'];
+        if (empty($_POST['id'])): // create
+            // insert  table adjust 
+            $sql_in = " INSERT INTO `adjust`(";
+            $sql_in .= " `pro_id`, `adj_product_lastamount`,";
+            $sql_in .= " `adj_adjust_no`, `adj_remark`,`adj_type`,`adj_createdate`,";
+            $sql_in .= " `adj_createby`, `adj_updatedate`, `adj_updateby`) VALUES (";
+            $sql_in .= " $pro_id,$pro_amount,";
+            $sql_in .= " $adj_no,'$adj_remark','$adj_type',NOW(),";
+            $sql_in .= " $per_id,NOW(),$per_id";
+            $sql_in .= " )";
+        else:
+            $sql = " UPDATE `adjust` SET";                        
+            $sql .= " `adj_product_lastamount` = $pro_amount,";
+            $sql .= " `adj_adjust_no` = $adj_no,";
+            $sql .= " `adj_remark` = '$adj_remark',";
+            $sql .= " `adj_type` = '$adj_type',";
+            $sql .= " `adj_updatedate` = NOW(),";
+            $sql .= " `adj_updateby` = $per_id";
+            $sql .= " WHERE adj_id = $id AND pro_id = $pro_id";
+        endif;
 
-        // insert  table adjust 
-        $sql_in = " INSERT INTO `adjust`(";
-        $sql_in .= " `pro_id`, `adj_product_lastamount`,";
-        $sql_in .= " `adj_adjust_no`, `adj_remark`,`adj_type`,`adj_createdate`,";
-        $sql_in .= " `adj_createby`, `adj_updatedate`, `adj_updateby`) VALUES (";
-        $sql_in .= " $pro_id,$pro_amount,";
-        $sql_in .= " $adj_no,'$adj_remark','$adj_type',NOW(),";
-        $sql_in .= " $per_id,NOW(),$per_id";
-        $sql_in .= " )";
         $query_in = mysql_query($sql_in) or die(mysql_error());
         if ($query_in): // insert complete
             // update table product
@@ -47,7 +59,13 @@ switch ($_GET['method']) {
             endif;
         endif; // end if insert adjust
         break;
-
+    case 'delete':
+        $id = $_GET['id'];
+        $sql = "DELETE FROM adjust WHERE adj_id=$id";
+        $query = mysql_query($sql) or die(mysql_error());
+        if ($query)
+            echo ReturnJson('success', '', 'ลบสำเร็จ', '');
+        break;
     default:
         break;
 }

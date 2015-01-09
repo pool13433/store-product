@@ -96,6 +96,19 @@ function Get_PersonStatus($params) {
     endif;
 }
 
+function Get_Adjust($params) {
+    $array = List_Adjust();
+    if (!empty($params)):
+        $result = "";
+        foreach ($array as $key => $value):
+            if (strval($key) === strval($params)):
+                $result = $value;
+            endif;
+        endforeach;
+        return $result;
+    endif;
+}
+
 function List_StoreContactStatus() {
     // vender,customer
     $array = array(
@@ -127,6 +140,7 @@ function List_BillInStatus() {
     );
     return $array;
 }
+
 function List_Adjust() {
     $array = array(
         'add' => 'เพิ่ม',
