@@ -31,6 +31,9 @@
                         <a  class="uk-button uk-button-primary uk-button-mini" href="#dialog-adjust_product<?= $row['pro_id'] ?>" data-uk-modal>
                             <i class="uk-icon-edit"></i> ปรับ
                         </a>
+                        <a  class="uk-button uk-button-success uk-button-mini" href="index.php?page=manage_adjust&id=<?= $row['pro_id'] ?>">
+                            <i class="uk-icon-edit"></i> แก้ไข
+                        </a>
                         <!-- modal -->
                         <div id="dialog-adjust_product<?= $row['pro_id'] ?>" class="uk-modal">
                             <?php

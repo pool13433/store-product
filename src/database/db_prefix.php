@@ -11,18 +11,18 @@ switch ($_GET['method']) {
         if (!empty($_POST)) {
             $id = $_POST['id'];
             $name = $_POST['name'];
-            $desc = $_POST['desc'];
+            //$desc = $_POST['desc'];
 
             if (empty($_POST['id'])) {
                 $sql = " INSERT INTO prefix (";
-                $sql .= " pre_name,pre_desc,pre_createdate,pre_createby,pre_updatedate,pre_updateby)VALUES(";
-                $sql .= " '$name','$desc',NOW(),$per_id,NOW(),$per_id";
+                $sql .= " pre_name,pre_createdate,pre_createby,pre_updatedate,pre_updateby)VALUES(";
+                $sql .= " '$name',NOW(),$per_id,NOW(),$per_id";
                 $sql .= " )";
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
             } else {
                 $sql = " UPDATE prefix SET ";
                 $sql .= " pre_name = '$name',";
-                $sql .= " pre_desc = '$desc',";
+                //$sql .= " pre_desc = '$desc',";
                 $sql .= " pre_updatedate = NOW(),";
                 $sql .= " pre_updateby = $per_id";
                 $sql .= " WHERE pre_id = $id";
