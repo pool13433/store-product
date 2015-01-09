@@ -145,8 +145,9 @@ if (empty($code)) {
             promptPosition: "centerRight",
             scroll: false,
             onValidationComplete: function(form, status) {
-                if (status == true)
+                if (status == true){
                     PostJson('frm-product', '../database/db_product.php?method=create');
+                }
             }
         });
         valid.css({

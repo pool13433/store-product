@@ -21,7 +21,7 @@
         <!-- datatable-->
         <script type="text/javascript" src="../../lib/DataTables-1.10.4/media/js/jquery.dataTables.min.js"></script>
         <!-- datatable-->
-        
+
         <!-- datatools-->
         <script type="text/javascript" src="../../lib/TableTools-2.2.3/js/dataTables.tableTools.js"></script>
         <!-- datatools-->
@@ -49,6 +49,29 @@
                         include 'login.php';
                     }
                     ?>
+
+                    <!-- This is the off-canvas sidebar -->
+                    <div id="my-id" class="uk-offcanvas">
+                        <div class="uk-offcanvas-bar">
+                            <div style="background-color: white;padding : 10px;">
+                                <ul class="uk-list uk-list-line uk-width-medium-10-10">
+                                    <?php
+                                    $sql_minproduct = "SELECT * FROM product WHERE pro_amount < 50 ORDER BY pro_amount ASC";
+                                    $query_minprodut = mysql_query($sql_minproduct) or die(mysql_error());
+                                    while ($data = mysql_fetch_array($query_minprodut)):
+                                        ?>
+                                        <li>
+                                            <div class="uk-alert uk-alert-success"><?=$data['pro_name']?> คงเหลือ <?=$data['pro_amount']?> ชิ้น </div>                                                                                                                            
+                                        </li>
+                                    <?php endwhile; ?>
+                                    <?php
+                                    if (!empty($conn))
+                                        mysql_close($conn);
+                                    ?>
+                                </ul>                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>            
         </div>        

@@ -1,4 +1,5 @@
 <?php
+
 @session_start();
 include '../config/Connect.php';
 include '../config/Website.php';
@@ -32,6 +33,9 @@ switch ($_GET['method']) {
         $sender_name = $form['sender_name'];
         $receiver_name = $form['receiver_name'];
         $autherized_name = $form['autherized_name'];
+        $approve = $form['approve'];
+//        var_dump($approve);
+//        exit();
         // ######## INSERT BILL_IN ##########
         if (empty($form['bill_id'])) { // INSERT NEW BILL
             $sql_bill = "INSERT INTO bill_in (`billin_invoicescode`,";
@@ -71,6 +75,10 @@ switch ($_GET['method']) {
             $sql_bill .= " `billin_autherized`='$autherized_name',";
             $sql_bill .= " billin_updatedate = NOW(),";
             $sql_bill .= " billin_updateby = $per_id";
+            if ($approve == 2 || $approve == 3):
+                // สถานะ  '0' => 'ลบ','1' => 'ปกติ รับของเรียบร้อย','2' => 'อนุมัติ ผ่าน','3' => 'อนุมัติ ไม่ผ่าน'
+                $sql_bill .= " ,billin_status = $approve";
+            endif;
             $sql_bill .= " WHERE billin_id = $bill_id";
         }
         //echo ' sql_bill : ' + $sql_bill;
@@ -104,133 +112,134 @@ switch ($_GET['method']) {
                     //
                     //#########GET BILL PRODUCT ############                
                     $product_stock = get_product_no($pro_code);
+                    if ($approve == 2): // ตรวจสอบการอนุมัติ ถ้า approve == 1 แสดงว่า มีเจ้าหน้าทีอนุมัติ เรียบร้อยแล้ว
+                        if (empty($form['bill_id'])) : // new แสดงว่า ไปบวก ของเข้าสต๊อกอย่างเดียว
+                            ######## UPDATE PRODUCT NO ##########                    
+                            $sql_product = " UPDATE `product` SET ";
+                            $sql_product .= " pro_unitprice = $pro_price,";
+                            $sql_product .= " `pro_amount`= " . ($pro_nocount + intval($product_stock['pro_amount'])) . ",";
+                            $sql_product .= " pro_discount = $pro_discount,";
+                            $sql_product .= " pro_createdate = NOW()";
+                            $sql_product .= " WHERE pro_code = '$pro_code'";
+                            $query_product = mysql_query($sql_product) or die(mysql_error() . " SQL : " . $sql_product);
+                            $row_update = mysql_affected_rows();
+                        ######## UPDATE PRODUCT NO ##########
+                        else : // edit ต้องดู จำนวนที่แก้ไข
+                            $difference_nocount = 0;
+                            $difference_price = 0;
+                            $difference_discount = 0;
 
-                    if (empty($form['bill_id'])) : // new แสดงว่า ไปบวก ของเข้าสต๊อกอย่างเดียว
-                        ######## UPDATE PRODUCT NO ##########                    
-                        $sql_product = " UPDATE `product` SET ";
-                        $sql_product .= " pro_unitprice = $pro_price,";
-                        $sql_product .= " `pro_amount`= " . ($pro_nocount + intval($product_stock['pro_amount'])) . ",";
-                        $sql_product .= " pro_discount = $pro_discount,";
-                        $sql_product .= " pro_createdate = NOW()";
-                        $sql_product .= " WHERE pro_code = '$pro_code'";
-                        $query_product = mysql_query($sql_product) or die(mysql_error() . " SQL : " . $sql_product);
-                        $row_update = mysql_affected_rows();
-                    ######## UPDATE PRODUCT NO ##########
-                    else : // edit ต้องดู จำนวนที่แก้ไข
-                        $difference_nocount = 0;
-                        $difference_price = 0;
-                        $difference_discount = 0;
-
-                        // ####### กรณี ค่าที่แก้ไข น้อยกว่าของเดิม ########
-                        // ########## number_count ##############
-                        //var_dump($billpro_old);
-                        /* echo '---------------------------------------------------------------------------------------------------------';
-                          echo ' # billpro_old = billinpro_nocount => ' . $billpro_old['billinpro_nocount'];
-                          echo ' # pro_nocount => ' . $pro_nocount;
-                          echo '---------------------------------------------------------------------------------------------------------';
-                          echo ' # billpro_old = billinpro_unitprice =>' . $billpro_old['billinpro_unitprice'];
-                          echo ' # pro_price => ' . $pro_price;
-                          echo '---------------------------------------------------------------------------------------------------------';
-                          echo ' # billpro_old = billinpro_discount => ' . $billpro_old['billinpro_discount'];
-                          echo ' # pro_discount => ' . $pro_discount;
-                          echo '---------------------------------------------------------------------------------------------------------';
-                          echo '##############################'; */
+                            // ####### กรณี ค่าที่แก้ไข น้อยกว่าของเดิม ########
+                            // ########## number_count ##############
+                            //var_dump($billpro_old);
+                            /* echo '---------------------------------------------------------------------------------------------------------';
+                              echo ' # billpro_old = billinpro_nocount => ' . $billpro_old['billinpro_nocount'];
+                              echo ' # pro_nocount => ' . $pro_nocount;
+                              echo '---------------------------------------------------------------------------------------------------------';
+                              echo ' # billpro_old = billinpro_unitprice =>' . $billpro_old['billinpro_unitprice'];
+                              echo ' # pro_price => ' . $pro_price;
+                              echo '---------------------------------------------------------------------------------------------------------';
+                              echo ' # billpro_old = billinpro_discount => ' . $billpro_old['billinpro_discount'];
+                              echo ' # pro_discount => ' . $pro_discount;
+                              echo '---------------------------------------------------------------------------------------------------------';
+                              echo '##############################'; */
 
 
-                        if (!empty($object['pro_id'])) {
-                            $billpro_old = get_bill_product($billpro_id);
+                            if (!empty($object['pro_id'])) {
+                                $billpro_old = get_bill_product($billpro_id);
 
-                            $difference_nocount = $billpro_old['billinpro_nocount'] - $pro_nocount;
-                            if ($difference_nocount != 0) {
-                                // ######## UPDATE STOCK #########
-                                $sql_update = "UPDATE product SET ";
-                                $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] - $difference_nocount);
-                                $sql_update .= " WHERE pro_code = '$pro_code'";
-                                mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-                                // ######## UPDATE STOCK #########
+                                $difference_nocount = $billpro_old['billinpro_nocount'] - $pro_nocount;
+                                if ($difference_nocount != 0) {
+                                    // ######## UPDATE STOCK #########
+                                    $sql_update = "UPDATE product SET ";
+                                    $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] - $difference_nocount);
+                                    $sql_update .= " WHERE pro_code = '$pro_code'";
+                                    mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+                                    // ######## UPDATE STOCK #########
+                                }
+
+                                $difference_price = $billpro_old['billinpro_unitprice'] - $pro_price;
+                                if ($difference_price != 0) {
+                                    // ######## UPDATE STOCK #########
+                                    $sql_update = "UPDATE product SET ";
+                                    $sql_update .= " pro_unitprice = .$pro_price";
+                                    $sql_update .= " WHERE pro_code = '$pro_code'";
+                                    mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+                                    // ######## UPDATE STOCK #########
+                                }
+                                $difference_discount = $billpro_old['billinpro_discount'] - $pro_discount;
+                                if ($difference_discount != 0) {
+                                    // ######## UPDATE STOCK #########
+                                    $sql_update = "UPDATE product SET ";
+                                    $sql_update .= " pro_discount = $pro_discount";
+                                    $sql_update .= " WHERE pro_code = '$pro_code'";
+                                    mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+                                    // ######## UPDATE STOCK #########
+                                }
+                                /* if ($billpro_old['billinpro_nocount'] > $pro_nocount) {
+                                  $difference_nocount = $billpro_old['billinpro_nocount'] - $pro_nocount;
+                                  // ######## UPDATE STOCK #########
+                                  $sql_update = "UPDATE product SET ";
+                                  $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] - $difference_nocount);
+                                  $sql_update .= " WHERE pro_code = '$pro_code'";
+                                  mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+                                  ;
+                                  // ######## UPDATE STOCK #########
+                                  } else if ($billpro_old['billinpro_nocount'] < $pro_nocount) {
+                                  $difference_nocount = $pro_nocount - $billpro_old['billinpro_nocount'];
+                                  // ######## UPDATE STOCK #########
+                                  $sql_update = "UPDATE product SET ";
+                                  $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] + $difference_nocount);
+                                  $sql_update .= " WHERE pro_code = '$pro_code'";
+                                  mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+
+                                  // ######## UPDATE STOCK #########
+                                  }
+                                  // ########## number_count ##############
+                                  //
+                                  // ########## price ##############
+                                  if ($billpro_old['billinpro_unitprice'] > $pro_price) {
+                                  $difference_price = $billpro_old['billinpro_unitprice'] - $pro_price;
+                                  // ######## UPDATE STOCK #########
+                                  $sql_update = "UPDATE product SET ";
+                                  $sql_update .= " pro_unitprice = " . ($product_stock['pro_unitprice'] - $difference_price);
+                                  $sql_update .= " WHERE pro_code = '$pro_code'";
+                                  mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+
+                                  // ######## UPDATE STOCK #########
+                                  } else if ($billpro_old['billinpro_unitprice'] < $pro_price) {
+                                  $difference_price = $pro_price - $billpro_old['billinpro_unitprice'];
+                                  // ######## UPDATE STOCK #########
+                                  $sql_update = "UPDATE product SET ";
+                                  $sql_update .= " pro_unitprice = " . ($product_stock['pro_unitprice'] + $difference_price);
+                                  $sql_update .= " WHERE pro_code = '$pro_code'";
+                                  mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+                                  // ######## UPDATE STOCK #########
+                                  }
+                                  // ########## price ##############
+                                  //
+                                  // ########## discount ##############
+                                  if ($billpro_old['billinpro_discount'] > $pro_discount) {
+                                  $difference_discount = $billpro_old['billinpro_unitprice'] - $pro_discount;
+                                  // ######## UPDATE STOCK #########
+                                  $sql_update = "UPDATE product SET ";
+                                  $sql_update .= " pro_discount = " . ($product_stock['pro_discount'] - $difference_discount);
+                                  $sql_update .= " WHERE pro_code = '$pro_code'";
+                                  mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+                                  // ######## UPDATE STOCK #########
+                                  } else if ($billpro_old['billinpro_discount'] < $pro_discount) {
+                                  $difference_discount = $pro_discount - $billpro_old['billinpro_unitprice'];
+                                  // ######## UPDATE STOCK #########
+                                  $sql_update = "UPDATE product SET ";
+                                  $sql_update .= " pro_discount = " . ($product_stock['pro_discount'] + $difference_discount);
+                                  $sql_update .= " WHERE pro_code = '$pro_code'";
+                                  mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
+                                  // ######## UPDATE STOCK #########
+                                  }
+                                  // ########## discount ##############
+                                 */
                             }
-
-                            $difference_price = $billpro_old['billinpro_unitprice'] - $pro_price;
-                            if ($difference_price != 0) {
-                                // ######## UPDATE STOCK #########
-                                $sql_update = "UPDATE product SET ";
-                                $sql_update .= " pro_unitprice = .$pro_price";
-                                $sql_update .= " WHERE pro_code = '$pro_code'";
-                                mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-                                // ######## UPDATE STOCK #########
-                            }
-                            $difference_discount = $billpro_old['billinpro_discount'] - $pro_discount;
-                            if ($difference_discount != 0) {
-                                // ######## UPDATE STOCK #########
-                                $sql_update = "UPDATE product SET ";
-                                $sql_update .= " pro_discount = $pro_discount";
-                                $sql_update .= " WHERE pro_code = '$pro_code'";
-                                mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-                                // ######## UPDATE STOCK #########
-                            }
-                            /* if ($billpro_old['billinpro_nocount'] > $pro_nocount) {
-                              $difference_nocount = $billpro_old['billinpro_nocount'] - $pro_nocount;
-                              // ######## UPDATE STOCK #########
-                              $sql_update = "UPDATE product SET ";
-                              $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] - $difference_nocount);
-                              $sql_update .= " WHERE pro_code = '$pro_code'";
-                              mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-                              ;
-                              // ######## UPDATE STOCK #########
-                              } else if ($billpro_old['billinpro_nocount'] < $pro_nocount) {
-                              $difference_nocount = $pro_nocount - $billpro_old['billinpro_nocount'];
-                              // ######## UPDATE STOCK #########
-                              $sql_update = "UPDATE product SET ";
-                              $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] + $difference_nocount);
-                              $sql_update .= " WHERE pro_code = '$pro_code'";
-                              mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-
-                              // ######## UPDATE STOCK #########
-                              }
-                              // ########## number_count ##############
-                              //
-                              // ########## price ##############
-                              if ($billpro_old['billinpro_unitprice'] > $pro_price) {
-                              $difference_price = $billpro_old['billinpro_unitprice'] - $pro_price;
-                              // ######## UPDATE STOCK #########
-                              $sql_update = "UPDATE product SET ";
-                              $sql_update .= " pro_unitprice = " . ($product_stock['pro_unitprice'] - $difference_price);
-                              $sql_update .= " WHERE pro_code = '$pro_code'";
-                              mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-
-                              // ######## UPDATE STOCK #########
-                              } else if ($billpro_old['billinpro_unitprice'] < $pro_price) {
-                              $difference_price = $pro_price - $billpro_old['billinpro_unitprice'];
-                              // ######## UPDATE STOCK #########
-                              $sql_update = "UPDATE product SET ";
-                              $sql_update .= " pro_unitprice = " . ($product_stock['pro_unitprice'] + $difference_price);
-                              $sql_update .= " WHERE pro_code = '$pro_code'";
-                              mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-                              // ######## UPDATE STOCK #########
-                              }
-                              // ########## price ##############
-                              //
-                              // ########## discount ##############
-                              if ($billpro_old['billinpro_discount'] > $pro_discount) {
-                              $difference_discount = $billpro_old['billinpro_unitprice'] - $pro_discount;
-                              // ######## UPDATE STOCK #########
-                              $sql_update = "UPDATE product SET ";
-                              $sql_update .= " pro_discount = " . ($product_stock['pro_discount'] - $difference_discount);
-                              $sql_update .= " WHERE pro_code = '$pro_code'";
-                              mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-                              // ######## UPDATE STOCK #########
-                              } else if ($billpro_old['billinpro_discount'] < $pro_discount) {
-                              $difference_discount = $pro_discount - $billpro_old['billinpro_unitprice'];
-                              // ######## UPDATE STOCK #########
-                              $sql_update = "UPDATE product SET ";
-                              $sql_update .= " pro_discount = " . ($product_stock['pro_discount'] + $difference_discount);
-                              $sql_update .= " WHERE pro_code = '$pro_code'";
-                              mysql_query($sql_update) or die(mysql_error() . " SQL : " . $sql_update);
-                              // ######## UPDATE STOCK #########
-                              }
-                              // ########## discount ##############
-                             */
-                        }
+                        endif;
                     endif;
 
                     if (empty($object['pro_id'])) {
@@ -266,27 +275,28 @@ switch ($_GET['method']) {
             $list_remove = json_decode($_POST['list_product_remove'], true);
 
             if (count($list_remove) > 0):
+                if ($approve == 2): // ตรวจสอบการอนุมัติ ถ้า approve == 1 แสดงว่า มีเจ้าหน้าทีอนุมัติ เรียบร้อยแล้ว
+                    foreach ($list_remove as $object):
+                        $billpro_id = $object['pro_id'];
+                        $pro_name = $object['pro_name'];
+                        $pro_code = $object['pro_code'];
+                        $pro_nobill = $object['pro_noinbill'];
+                        $pro_nocount = $object['pro_nocount'];
+                        $pro_remark = $object['pro_remark'];
+                        $pro_type = $object['pro_type'];
+                        $pro_price = $object['pro_price'];
+                        $pro_discount = $object['pro_discount'];
+                        $pro_total_price = $object['pro_total_price'];
 
-                foreach ($list_remove as $object):
-                    $billpro_id = $object['pro_id'];
-                    $pro_name = $object['pro_name'];
-                    $pro_code = $object['pro_code'];
-                    $pro_nobill = $object['pro_noinbill'];
-                    $pro_nocount = $object['pro_nocount'];
-                    $pro_remark = $object['pro_remark'];
-                    $pro_type = $object['pro_type'];
-                    $pro_price = $object['pro_price'];
-                    $pro_discount = $object['pro_discount'];
-                    $pro_total_price = $object['pro_total_price'];
+                        $product_stock = get_product_no($pro_code);
 
-                    $product_stock = get_product_no($pro_code);
-
-                    $billpro_old = get_bill_product($billpro_id);
-                    $sql_update = "UPDATE product SET ";
-                    $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] - $pro_nocount);
-                    $sql_update .= " WHERE pro_code = '$pro_code'";
-                    mysql_query($sql_update) or die(mysql_error());
-                endforeach;
+                        $billpro_old = get_bill_product($billpro_id);
+                        $sql_update = "UPDATE product SET ";
+                        $sql_update .= " pro_amount = " . ($product_stock['pro_amount'] - $pro_nocount);
+                        $sql_update .= " WHERE pro_code = '$pro_code'";
+                        mysql_query($sql_update) or die(mysql_error());
+                    endforeach;
+                endif;
 
                 // ######### Remove ######
                 foreach ($list_remove as $object):
