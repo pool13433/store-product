@@ -121,8 +121,16 @@ function Get_StoreContactStatus($params) {
 function List_BillInStatus() {
     $array = array(
         '0' => 'ลบ',
-        '1' => 'ปกติ',
-        '2' => '',
+        '1' => 'ปกติ รับของเรียบร้อย',
+        '2' => 'อนุมัติ ผ่าน',
+        '3' => 'อนุมัติ ไม่ผ่าน'
+    );
+    return $array;
+}
+function List_Adjust() {
+    $array = array(
+        'add' => 'เพิ่ม',
+        'remove' => 'ลบออก',
     );
     return $array;
 }

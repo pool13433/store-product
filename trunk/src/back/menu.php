@@ -1,7 +1,12 @@
 <div class="uk-panel uk-panel-box">
-    <h3 class="uk-panel-title">ยินดีตอนรับสู่</h3>
+    <h3 class="uk-panel-title">ยินดีตอนรับสู่</h3>    
     <h3 class="uk-panel-title">ระบบจัดการคลังสินค้า</h3>
     <ul class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="">
+        <li class="uk-nav-header">
+            <button class="uk-button uk-button-mini uk-button-danger" data-uk-offcanvas="{target:'#my-id'}">
+                สินค้าใกล้หมด
+            </button>
+        </li>  
         <li class="uk-nav-divider"></li>
         <li class="uk-nav-header">ตั้งค่า</li>
         <li>
@@ -33,6 +38,8 @@
         </li>
     </ul>
 </div>
+
+
 <script type="text/javascript">
     function logout() {
         var conf = confirm('ยืนยันการออกจากระบบ');

@@ -60,8 +60,9 @@ if (!empty($_GET['id'])) {
             promptPosition: "centerRight",
             scroll: false,
             onValidationComplete: function(form, status) {
-                if (status == true)
+                if (status == true) {
                     PostJson('frm-pay_codition', '../database/db_pay_condition.php?method=create');
+                }
             }
         });
         valid.css({

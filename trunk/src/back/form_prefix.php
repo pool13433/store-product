@@ -56,8 +56,9 @@ if (!empty($_GET['id'])) {
             promptPosition: "centerRight",
             scroll: false,
             onValidationComplete: function(form, status) {
-                if (status == true)
+                if (status == true){
                     PostJson('frm-prefix', '../database/db_prefix.php?method=create');
+                }
             }
         });
         valid.css({

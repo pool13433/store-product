@@ -33,8 +33,4 @@
         </tbody>
     </table>
 </div>
-<?php
-if (!empty($conn))
-    mysql_close ($conn);
-?>
 

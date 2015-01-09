@@ -331,14 +331,43 @@ if (empty($Invoices_code)) {
                 </div>
             </div>
             <hr/>
+            <?php if (!empty($_GET['id'])): ?>
+                <div class="uk-grid">
+                    <div class="uk-width-4-4">
+                        <div class="uk-form-row">
+                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="0" checked/>                  
+                            รอ อนมุติการรับของเข้า
+                        </div> 
+                    </div>
+                </div>
+                <hr/>
+                <div class="uk-grid">
+                    <div class="uk-width-4-4">
+                        <div class="uk-form-row">
+                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="2"/>                  
+                            อนมุติการรับของเข้า ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
+                        </div> 
+                    </div>
+                </div>
+                <hr/>
+                <div class="uk-grid">
+                    <div class="uk-width-4-4">
+                        <div class="uk-form-row">                            
+                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="3"/>                  
+                            อนมุติการรับของเข้า ไม่ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
+                        </div> 
+                    </div>
+                </div>
+                <hr/>
+            <?php endif; ?>
             <div class="uk-form-row">
                 <div class="uk-form-controls">
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">
                         <i class="uk-icon-save"></i> บันทึก
                     </button>
-                    <button class="uk-button uk-button-danger uk-button-large" type="button" onclick="get_data_table()">
+                    <a class="uk-button uk-button-danger uk-button-large" href="index.php?page=manage_bill_in">
                         <i class="uk-icon-arrow-circle-left"></i> ยกเลิก
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>        
@@ -528,7 +557,7 @@ if (empty($Invoices_code)) {
         var totalPrcice = 0;
         $('#table_product tr').each(function(index, element) {
             var price = $(element).find('td:eq(8)').find('input:text').val();
-            console.log('price : ' + price);
+            //console.log('price : ' + price);
             totalPrcice = totalPrcice + parseInt(price);
         });
         $('#input-beforeprice').val(totalPrcice);
