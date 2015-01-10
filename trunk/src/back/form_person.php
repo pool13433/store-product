@@ -33,7 +33,7 @@ if (empty($code)) {
     $sql = "SELECT per_code FROM person ORDER BY per_code DESC LIMIT 0,1";
     $query = mysql_query($sql) or die(mysql_error());
     $result = mysql_fetch_assoc($query);
-    $code = Gen_Code(intval($result['per_code']));
+    $code = 'EMP' .Gen_Code(intval($result['per_code']));
 }
 //################# GENARATE CODE ############
 ?>
@@ -41,19 +41,19 @@ if (empty($code)) {
 <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
     <form class="uk-form uk-form-horizontal" id="frm-person">
         <fieldset data-uk-margin>
-            <legend>กรอกข้อมูลความปลอดภัย</legend>
+            <legend>กรอกข้อมูลผู้ใช้งาน</legend>
             <div class="uk-form-row">
-                <label for="input-username" class="uk-form-label">Username</label>
+                <label for="input-username" class="uk-form-label">ชื่อผู้ใช้งาน</label>
                 <div class="uk-form-controls">
                     <input type="hidden" name="id" value="<?= $id ?>"/>
                     <input type="text" name="username" id="input-username" value="<?= $username ?>" 
                            data-validation-engine="validate[required]"
-                           data-errormessage-value-missing="กรุณากรอก username" 
+                           data-errormessage-value-missing="กรุณากรอก ชื่อผู้ใช้งาน" 
                            />
                 </div>
             </div>
             <div class="uk-form-row">
-                <label for="input-password" class="uk-form-label">Password</label>
+                <label for="input-password" class="uk-form-label">รหัสผ่าน</label>
                 <div class="uk-form-controls">
                     <input type="password" name="password" id="input-password" value="<?= $password ?>"
                            data-validation-engine="validate[required,minSize[6]]"
@@ -63,11 +63,11 @@ if (empty($code)) {
                 </div>
             </div>
             <div class="uk-form-row">
-                <label for="input-repassword" class="uk-form-label">ยืนยัน Password</label>
+                <label for="input-repassword" class="uk-form-label">ยืนยันรหัสผ่าน</label>
                 <div class="uk-form-controls">
                     <input type="password" name="repassword" id="input-repassword"  value="<?= $password ?>"                          
                            data-validation-engine="validate[required,minSize[6],equals[input-password]]"
-                           data-errormessage-value-missing="กรุณากรอก password" 
+                           data-errormessage-value-missing="กรุณากรอกรหัสผ่าน" 
                            data-errormessage-range-underflow="กรุณากรอกข้อมูล รหัสผ่านอย่างน้อย 6 ตัวอักษร"
                            data-errormessage-pattern-mismatch="กรุณากรอกข้อมูล รหัสผ่านให้ตรงกัน"
                            />
@@ -83,7 +83,7 @@ if (empty($code)) {
                 </div>
             </div>
             <div class="uk-form-row">
-                <label for="input-code" class="uk-form-label">CODE</label>
+                <label for="input-code" class="uk-form-label">รหัสผู้ใช้งาน</label>
                 <div class="uk-form-controls">
                     <input type="text" name="code" id="input-code" value="<?= $code ?>" readonly/>
                 </div>
@@ -123,12 +123,12 @@ if (empty($code)) {
                 </div>
             </div>
             <div class="uk-form-row">
-                <label for="input-email" class="uk-form-label">อีเมมล์</label>
+                <label for="input-email" class="uk-form-label">อีเมล์</label>
                 <div class="uk-form-controls">
                     <input type="text" name="email" id="input-email" value="<?= $email ?>"
                            data-validation-engine="validate[required,custom[email]]"
-                           data-errormessage-value-missing="กรุณากรอก อีเมมล์" 
-                           data-errormessage-custom-error="กรุณากรอกอีเมมล์ ให้ถูกต้อง"/>
+                           data-errormessage-value-missing="กรุณากรอก อีเมล์" 
+                           data-errormessage-custom-error="กรุณากรอกอีเมล์ ให้ถูกต้อง"/>
                 </div>
             </div>
             <div class="uk-form-row">
