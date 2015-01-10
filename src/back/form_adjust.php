@@ -2,6 +2,7 @@
 include '../config/Connect.php';
 $id = "";
 $adj_product_lastamount = "";
+$pro_amount = "";
 $pro_id = "";
 $pro_name = "";
 $adj_adjust_no = "";
@@ -17,6 +18,7 @@ if (!empty($_GET['id'])) {
     $id = $data['adj_id'];
     $adj_product_lastamount = $data['adj_product_lastamount'];
     $adj_adjust_no = $data['adj_adjust_no'];
+    $$pro_amount = $data['pro_amount'];
     $pro_name = $data['pro_name'];
     $pro_id = $data['pro_id'];
     $adj_remark = $data['adj_remark'];
@@ -32,7 +34,8 @@ if (!empty($_GET['id'])) {
                 <label for="input-code" class="uk-form-label">จำนวนคงเหลือ</label>
                 <input type="hidden" name="id" id="input-id" value="<?= $id ?>" />
                 <input type="hidden" name="pro_id" id="input-pro_id" value="<?= $pro_id ?>" />
-                <input type="text" name="pro_amount" id="input-amount" value="<?= $adj_product_lastamount ?>" readonly/>
+                <input type="hidden" name="pro_amount" id="input-amount" value="<?= $pro_amount ?>" readonly/>
+                <input type="text" name="adj_product_lastamount" id="input-amount" value="<?= $adj_product_lastamount ?>" readonly/>
                 <input type="text" name="pro_name" id="input-name" value="<?= $pro_name ?>" readonly/>
             </div>
             <div class="uk-form-row">
@@ -41,22 +44,23 @@ if (!empty($_GET['id'])) {
             </div>
             <div class="uk-form-row">
                 <label for="input-code" class="uk-form-label">จำนวนที่ปรับ</label>
+                <input type="hidden" name="adj_no_old" value="<?= $adj_adjust_no ?>"/>
                 <input type="text" name="adj_no" id="input-name" class="validate[required]"
-                       data-errormessage-value-missing="กรุณากรอก จำนวนที่ปรับ" value="<?=$adj_adjust_no?>"/>
+                       data-errormessage-value-missing="กรุณากรอก จำนวนที่ปรับ" value="<?= $adj_adjust_no ?>"/>
             </div>
             <div class="uk-form-row">
                 <label for="input-remark" class="uk-form-label">เหตุผล/หมายเหตุ</label>
                 <textarea  rows="5" cols="60" name="adj_remark" id="input-remark" 
                            class="validate[required]"
                            data-errormessage-value-missing="คำอธิบาย" 
-                           ><?=$adj_remark?></textarea>
+                           ><?= $adj_remark ?></textarea>
             </div>     
             <div class="uk-form-row">
                 <div class="uk-form-controls">
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">
                         <i class="uk-icon-save"></i> บันทึก
                     </button>
-                    <a class="uk-button uk-button-danger uk-button-large uk-modal-close" href="index.php?page=manage_adjust&id=<?=$pro_id?>">
+                    <a class="uk-button uk-button-danger uk-button-large uk-modal-close" href="index.php?page=manage_adjust&id=<?= $pro_id ?>">
                         <i class="uk-icon-arrow-circle-left"></i> ยกเลิก/ปิด
                     </a>
                 </div>

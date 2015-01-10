@@ -31,9 +31,9 @@
                         <a  class="uk-button uk-button-primary uk-button-mini" href="#dialog-adjust_product<?= $row['pro_id'] ?>" data-uk-modal>
                             <i class="uk-icon-edit"></i> ปรับ
                         </a>
-                        <a  class="uk-button uk-button-success uk-button-mini" href="index.php?page=manage_adjust&id=<?= $row['pro_id'] ?>">
+                        <!--<a  class="uk-button uk-button-success uk-button-mini" href="index.php?page=manage_adjust&id=<?= $row['pro_id'] ?>">
                             <i class="uk-icon-edit"></i> แก้ไข
-                        </a>
+                        </a>-->
                         <!-- modal -->
                         <div id="dialog-adjust_product<?= $row['pro_id'] ?>" class="uk-modal">
                             <?php
@@ -53,8 +53,10 @@
                                                 <legend>กรอกข้อมูลสินค้า</legend>
                                                 <div class="uk-form-row">
                                                     <label for="input-code" class="uk-form-label">จำนวนคงเหลือ</label>
+                                                    <input type="hidden" name="id" id="input-amount" value="" />
                                                     <input type="hidden" name="pro_id" id="input-amount" value="<?= $data['pro_id']?>" />
-                                                    <input type="text" name="pro_amount" id="input-amount" value="<?= $data['pro_amount'] ?>" readonly/>
+                                                    <input type="hidden" name="pro_amount" id="input-amount"/>
+                                                    <input type="text" name="adj_product_lastamount" id="input-adj_product_lastamount" value="<?= $data['pro_amount'] ?>" readonly/>
                                                 </div>
                                                 <div class="uk-form-row">
                                                     <label for="input-code" class="uk-form-label">ประเภท</label>
@@ -62,6 +64,7 @@
                                                 </div>
                                                 <div class="uk-form-row">
                                                     <label for="input-code" class="uk-form-label">จำนวนที่ปรับ</label>
+                                                    <input type="hidden" name="adj_no_old" value=""/>
                                                     <input type="text" name="adj_no" id="input-name" class="validate[required]"
                                                            data-errormessage-value-missing="กรุณากรอก จำนวนที่ปรับ" />
                                                 </div>
