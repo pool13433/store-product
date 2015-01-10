@@ -74,11 +74,9 @@ function ServerInfo() {
 
 function List_PersonStatus() {
     $array = array(
-        '1' => 'รอ Wait',
-        '2' => 'ผู้ดูแลระบบ Admin',
-        '3' => 'เจ้าหน้าที่ Officer',
-        '4' => 'ลูกค้า Customer',
-        '5' => 'Vender',
+        '1' => 'พนักงานประจำหน้าร้าน',
+        '2' => 'พนักงานประจำโกดัง',
+        '3' => 'เจ้าของร้าน',
     );
     return $array;
 }
@@ -164,41 +162,41 @@ function Get_BillInStatus($params) {
 
 function Gen_Code($code) {
     $code = intval($code) + 1;
-    $nextNumber = "0000000000";
-    // 0000000001
+    $nextNumber = "00000";
+    // 00001
     if ($code < 10) { //9
-        $nextNumber = "000000000" . $code;
+        $nextNumber = "0000" . $code;
         return $nextNumber;
     } else {
         if ($code < 100) { // 99
-            $nextNumber = "00000000" . $code;
+            $nextNumber = "000" . $code;
             return $nextNumber;
         } else {
             if ($code < 1000) { // 999 
-                $nextNumber = "0000000" . $code;
+                $nextNumber = "00" . $code;
                 return $nextNumber;
             } else {
                 if ($code < 10000) { // 9999
-                    $nextNumber = "000000" . $code;
+                    $nextNumber = "0" . $code;
                     return $nextNumber;
                 } else {
-                    if ($code < 100000) { // 99999
-                        $nextNumber = "00000" . $code;
+                    if ($code < 1) { // 99999
+                        $nextNumber = "" . $code;
                         return $nextNumber;
                     } else {
-                        if ($code < 1000000) { //999999
+                        if ($code < 10) { //999999
                             $nextNumber = "0000" . $code;
                             return $nextNumber;
                         } else {
-                            if ($code < 10000000) { //9999999
+                            if ($code < 100) { //9999999
                                 $nextNumber = "000" . $code;
                                 return $nextNumber;
                             } else {
-                                if ($code < 100000000) { //99999999
+                                if ($code < 1000) { //99999999
                                     $nextNumber = "00" . $code;
                                     return $nextNumber;
                                 } else {
-                                    if ($code < 1000000000) { //99999999
+                                    if ($code < 10000) { //99999999
                                         $nextNumber = "0" . $code;
                                         return $nextNumber;
                                     } else {

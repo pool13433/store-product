@@ -15,14 +15,16 @@ switch ($_GET['method']) {
             $address = $_POST['address'];
             $onwer = $_POST['onwer'];
             $type = $_POST['type'];
+            $pid = $_POST['pid'];
+            $telephone = $_POST['telephone'];
             if (empty($_POST['id'])) {
                 $code = $_POST['type'] . $_POST['code'];
                 $sql = " INSERT INTO store_contact(";
                 $sql .= " store_code,store_name,store_desc,store_onwer,";
-                $sql .= " store_address,store_type,store_createdate,store_createby,";
+                $sql .= " store_address,store_type,store_pid,store_telephone,store_createdate,store_createby,";
                 $sql .= " store_updatedate,store_updateby)VALUES(";
                 $sql .= " '$code','$name','$desc','$onwer',";
-                $sql .= " '$address','$type',NOW(),$per_id,";
+                $sql .= " '$address','$type','$pid','$telephone',NOW(),$per_id,";
                 $sql .= " NOW(),$per_id";
                 $sql .= " )";
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
@@ -35,6 +37,8 @@ switch ($_GET['method']) {
                 $sql .= " store_onwer = '$onwer',";
                 $sql .= " store_address = '$address',";
                 $sql .= " store_type = '$type',";
+                $sql .= " store_pid = '$pid',";
+                $sql .= " store_telephone = '$telephone',";
                 $sql .= " store_updatedate = NOW(),";
                 $sql .= " store_updateby = $per_id";
                 $sql .= " WHERE store_id = $id";
@@ -74,7 +78,7 @@ switch ($_GET['method']) {
             $result = mysql_fetch_assoc($query);
             //var_dump($result['store_code']);  
             echo json_encode($result);
-        }else{
+        } else {
             echo json_encode(array(
                 'status' => 'fail'
             ));

@@ -7,8 +7,8 @@
     <table class="uk-table uk-table-condensed uk-table-line dataTable">
         <thead>
             <tr>
-                <th>ลำดับ</th>
-                <th>รหัสผู้ใช้งาน</th>
+                <!--<th>ลำดับ</th>-->
+                <th style="width: 12%">รหัสผู้ใช้งาน</th>
                 <th>ชื่อ-สกุล</th>
                 <th>ที่อยู่</th>
                 <th>โทรศัพท์</th>
@@ -26,7 +26,7 @@
             while ($row = mysql_fetch_array($query)):
                 ?>
                 <tr>
-                    <td><?=$row['per_id']?></td>
+                   <!-- <td><?=$row['per_id']?></td>-->
                     <td><?=$row['per_code']?></td>
                     <td><?=$row['per_fname']." ".$row['per_lname']?></td>
                     <td><?=$row['per_address']?></td>
