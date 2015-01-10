@@ -246,6 +246,14 @@ function change_dateTimeFormat($deforeDate) {
     return $myDateTime->format('Y-m-d H:i:s');
 }
 
+function chang_dateDMY_MDY($date) {
+    $arr = explode('/', $date);
+    $y = $arr[2];
+    $m = $arr[1];
+    $d = $arr[0];
+    return $m . '/' . $d . '/' . $y;
+}
+
 function getMonthFullThai() {
     $months = array();
     $ArrayMonths = array('-- Select --', 'มกราคม', 'กุมภาพันธ์',

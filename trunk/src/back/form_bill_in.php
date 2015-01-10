@@ -331,6 +331,7 @@ if (empty($Invoices_code)) {
                 </div>
             </div>
             <hr/>
+            <!-- สำหรับ เจ้าของร้าน เท่านั้น ฉะนั้น จะแสดงเมื่อ คลิกมาจาก ปุ่มแก้ไข-->
             <?php if (!empty($_GET['id'])): ?>
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
@@ -357,9 +358,18 @@ if (empty($Invoices_code)) {
                             อนมุติการรับของเข้า ไม่ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
                         </div> 
                     </div>
+                </div>                
+            <?php else: ?>    
+                <div class="uk-grid">
+                    <div class="uk-width-4-4">
+                        <div class="uk-form-row">
+                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="0" checked/>                  
+                            รอ อนมุติการรับของเข้า
+                        </div> 
+                    </div>
                 </div>
                 <hr/>
-            <?php endif; ?>
+            <?php endif; ?>            
             <div class="uk-form-row">
                 <div class="uk-form-controls">
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">
@@ -551,6 +561,7 @@ if (empty($Invoices_code)) {
             var cell8 = $(parent_tr).find('td:eq(8)');
             var object_totalprice = $(cell8).find('input:text');
             $(object_totalprice).val(calPrice);
+            calculateTotalPrice();
         }
     }
     function calculateTotalPrice() {
