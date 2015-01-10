@@ -21,10 +21,10 @@ switch ($_GET['method']) {
         $totalprice = $form['totalprice'];
 
         if (empty($form['bill_id'])) { //$form['bill_id']
-            $sql_bill = " INSERT INTO `bill_out`(`billout_code`, `customer_id`,billout_outdate, ";
+            $sql_bill = " INSERT INTO `bill_out` (`billout_code`,`customer_id`,`billout_outdate`, ";
             $sql_bill .= " `officer_id`, `pay_id`, `billout_receiver`, `billout_sender`, ";
             $sql_bill .= " `billout_createdate`,`billout_createby`,";
-            $sql_bill .= " `billout_updatedate`,`billout_updateby``billout_total`,billout_status) VALUES (";
+            $sql_bill .= " `billout_updatedate`,`billout_updateby`,`billout_total`,`billout_status`) VALUES (";
             $sql_bill .= " '$billcode',$customer_id,'" . change_dateDMY_TO_YMD($billdate) . "',";
             $sql_bill .= " $officer,$pay_condition,'$receiver','$sender',";
             $sql_bill .= " NOW(),$per_id,";

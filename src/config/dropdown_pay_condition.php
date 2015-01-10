@@ -1,4 +1,4 @@
-<?php $listPersonStatus = List_PersonStatus(); ?>
+<?php $listPersonStatus = List_StoreContactStatus(); ?>
 <select id="form-s-s" name="pay_condition"
          data-validation-engine="validate[required]"
          data-errormessage-value-missing="กรุณากรอก เงื่อนไขการจ่ายเงิน">

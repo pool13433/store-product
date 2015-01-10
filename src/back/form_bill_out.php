@@ -90,7 +90,22 @@ if (!empty($_GET['id'])) {
                     <div class="uk-form-row">
                         <label for="input-customer" class="uk-form-label">เงื่อนไขการชำระเงิน</label>
                         <div class="uk-form-controls">
-                            <?php include '../config/dropdown_pay_condition.php'; ?>
+                            <?php
+                            $sql_pay_condition = "SELECT * FROM pay_condition ORDER BY pay_id";
+                            $query_pay_condition = mysql_query($sql_pay_condition) or die(mysql_error());
+                            ?>
+                            <select id="form-s-s" name="pay_condition"
+                                    data-validation-engine="validate[required]"
+                                    data-errormessage-value-missing="กรุณากรอก เงื่อนไขการจ่ายเงิน">
+                                <option value="">-- เลือก --</option>
+                                <?php while ($data_pay = mysql_fetch_array($query_pay_condition)): ?>
+                                    <?php if ($pay_condition == $data_pay['pay_id']): ?>
+                                        <option value="<?= $data_pay['pay_id'] ?>" selected><?= $data_pay['pay_name'] ?></option>
+                                    <?php else : ?>
+                                        <option value="<?= $data_pay['pay_id'] ?>" selected><?= $data_pay['pay_name'] ?></option>
+                                    <?php endif; ?>
+                                <?php endwhile; ?>
+                            </select>
                         </div>    
                     </div>
                 </div>
@@ -216,7 +231,7 @@ if (!empty($_GET['id'])) {
                     tr += '<td style="width:10%"><input type="hidden" name="id" value="' + object.billoutpro_id + '"/>' + object.pro_code + '</td>';
                     tr += '<td style="width:15%">' + object.pro_name + '</td>';
                     tr += '<td style="width:15%">' + object.type_name + '</td>';
-                    tr += '<td style="width:10%">' + object.pro_amount + '</td>';    
+                    tr += '<td style="width:10%">' + object.pro_amount + '</td>';
                     tr += '<td style="width:10%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billoutpro_nocount + '"/></td>';
                     tr += '<td style="width:10%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billoutpro_unitprice + '"/></td>';
                     tr += '<td style="width:10%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="isInt(this)" value="' + object.billoutpro_discount + '"/></td>';
@@ -224,13 +239,13 @@ if (!empty($_GET['id'])) {
                     tr += '<td style="width:5%"><button type="button" class="uk-button uk-button-mini uk-button-danger" onclick="remove_tr(this,' + object.billoutpro_id + ')"><i class="uk-icon-trash-o"></i>ลบ</button></td>';
                     tr += '</tr>';
                     $('#table_product').append(tr);
-                     calculateTotalPrice();
+                    calculateTotalPrice();
                 });
                 appendDropdownProductType();
             }
         });
         //#############LOAD PRODUCT ###########
-               
+
     });
     function loadDialogDataTable() {
         $('#content-product').load('load_product.php');
@@ -308,18 +323,18 @@ if (!empty($_GET['id'])) {
             calculateTotalPrice();
         }
     }
-    function calculateTotalPrice(){
+    function calculateTotalPrice() {
         var totalPrcice = 0;
-        $('#table_product tr').each(function(index, element) {             
-             var price = $(element).find('td:eq(7)').find('input:text').val();                          
-             console.log('price : '+price);
-             totalPrcice = totalPrcice+parseInt(price);             
+        $('#table_product tr').each(function(index, element) {
+            var price = $(element).find('td:eq(7)').find('input:text').val();
+            console.log('price : ' + price);
+            totalPrcice = totalPrcice + parseInt(price);
         });
         $('#input-totalprice').val(totalPrcice);
         var element = $('#input-totalprice').val();
         getTextBath(element);
     }
-    function getTextBath(price) {        
+    function getTextBath(price) {
         $.post('../database/db_bill_out.php?method=get_thaibath_text', {price: price}, function(data) {
             $('#label-price').text(data);
         });

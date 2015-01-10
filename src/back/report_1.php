@@ -47,7 +47,7 @@ endif;
         <div class="uk-form-row" style="text-align: right">
             <div class="uk-form-controls">
                 <a class="uk-button uk-button-primary" 
-                   href="../report/report.php?method=report_1&date_start=<?= $date_start ?>&date_end=<?= $date_end ?>" target="_blank">
+                   href="../report/report.php?method=report_1&date_start=<?= $_GET['date_start'] ?>&date_end=<?= $_GET['date_end'] ?>" target="_blank">
                     <i class="uk-icon-print"></i> ออกรายงาน
                 </a>
             </div>
