@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 22, 2014 at 05:29 PM
+-- Generation Time: Jan 10, 2015 at 03:57 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -19,6 +19,38 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_store`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adjust`
+--
+
+CREATE TABLE IF NOT EXISTS `adjust` (
+  `adj_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pro_id` int(11) NOT NULL COMMENT 'รหัสสินค้า',
+  `adj_product_lastamount` int(11) NOT NULL COMMENT 'จำนวนเดิมก่อนการปรับสมดุล',
+  `adj_adjust_no` int(11) NOT NULL COMMENT 'จำนวนที่ต้องการเปลี่ยนแปลง',
+  `adj_remark` text NOT NULL,
+  `adj_type` enum('add','remove') NOT NULL COMMENT 'เพิ่ม หรือ ลบออก',
+  `adj_createdate` date NOT NULL,
+  `adj_createby` int(11) NOT NULL,
+  `adj_updatedate` date NOT NULL,
+  `adj_updateby` int(11) NOT NULL,
+  PRIMARY KEY (`adj_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `adjust`
+--
+
+INSERT INTO `adjust` (`adj_id`, `pro_id`, `adj_product_lastamount`, `adj_adjust_no`, `adj_remark`, `adj_type`, `adj_createdate`, `adj_createby`, `adj_updatedate`, `adj_updateby`) VALUES
+(1, 8, 11, 100, 'ปรับเพราะ แตก', 'add', '2015-01-09', 1, '2015-01-09', 1),
+(2, 14, 133, 10000, '10000', 'add', '2015-01-09', 1, '2015-01-09', 1),
+(4, 12, 55555555, 5555, '5555', 'remove', '2015-01-09', 1, '2015-01-09', 1),
+(5, 13, 1, 5555, '5555', 'add', '2015-01-09', 1, '2015-01-09', 1),
+(6, 6, 39, 111111, '111111  111111', 'remove', '2015-01-09', 1, '2015-01-09', 1),
+(7, 2, 143, 100, '100 100', 'add', '2015-01-09', 1, '2015-01-09', 1);
 
 -- --------------------------------------------------------
 
@@ -50,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `bill_in` (
   `billin_createby` int(11) NOT NULL,
   `billin_updatedate` date NOT NULL,
   `billin_updateby` int(11) NOT NULL,
-  `billin_status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ',
+  `billin_status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ  ''0'' => ''ลบ'',''1'' => ''ปกติ รับของเรียบร้อย'',''2'' => ''อนุมัติ ผ่าน'',''3'' => ''อนุมัติ ไม่ผ่าน''',
   PRIMARY KEY (`billin_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
@@ -60,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `bill_in` (
 
 INSERT INTO `bill_in` (`billin_id`, `billin_invoicescode`, `billin_taxcode`, `billin_indate`, `store_id`, `billin_doccode`, `billin_docdate`, `pay_id`, `billin_finishdate`, `billin_paycode`, `officer_id`, `billin_localtioncode`, `billin_weight`, `billin_pricebeforevat`, `billin_vat`, `billin_priceaftervat`, `billin_sender`, `billin_receiver`, `billin_autherized`, `billin_createdate`, `billin_createby`, `billin_updatedate`, `billin_updateby`, `billin_status`) VALUES
 (2, '0000000002', '55555555', '2014-12-02', 1, '1', '2014-12-12', 1, '2014-12-03', '1', 2, 3, 0, 0, 0, 0, '0', '0', '', '2014-12-15', 0, '0000-00-00', 0, 0),
-(15, '0000000007', '9090909090', '1900-11-06', 1, '5555555', '1900-11-13', 5, '1900-11-06', '5555555', 5555555, 5555555, 100, 247, 11, 274, '1111', '111', '11', '2014-12-20', 0, '2014-12-22', 8, 1),
+(15, '0000000007', '9090909090', '1900-11-06', 1, '5555555', '1900-11-13', 5, '1900-11-06', '5555555', 5555555, 5555555, 100, 247, 11, 274, '1111', '111', '11', '2014-12-20', 0, '2015-01-09', 1, 1),
 (16, '0000000008', 'TEST', '2014-12-03', 1, 'TEST TEST', '2014-12-02', 1, '2014-12-11', '111', 111, 1111, 0, 269733, 111, 569136, '0', '0', '', '2014-12-20', 0, '2014-12-22', 8, 1);
 
 -- --------------------------------------------------------
@@ -264,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `person` (
 
 INSERT INTO `person` (`per_id`, `pre_id`, `per_code`, `per_fname`, `per_lname`, `per_username`, `per_password`, `per_address`, `per_mobile`, `per_email`, `per_createdate`, `per_createby`, `per_updatedate`, `per_updateby`, `per_status`) VALUES
 (1, 0, '0000000001', 'admin', 'admin', 'admin', '1234', 'admin', '080', '@hotmail.com', '2014-12-10', 0, '0000-00-00', 0, 1),
-(5, 1, '0000000002', 'พูลสวัสดิ์', 'อภิญ', 'pool13433', 'pool123', 'ระยอง', '0878356866', 'poon_mp@hotmail.com', '2014-12-21', 0, '2014-12-22', 8, 2),
+(5, 1, '0000000002', 'พูลสวัสดิ์', 'อภิญ', 'pool13433', 'pool123', 'ระยอง', '0878356866', 'poon_mp@hotmail.com', '2014-12-21', 0, '2014-12-25', 1, 2),
 (7, 1, '0000000003', 'TESTTEST', 'TESTTEST', 'TESTTESTTESTTEST', 'TESTTESTTESTTEST', 'TESTTEST', '111111111111', 'TESTTEST@gmail.com', '2014-12-21', 0, '2014-12-22', 8, 1),
 (8, 0, '0000000004', 'UUUUUU', 'UUUUUU', 'UUUUUU', 'UUUUUU', 'UUUUUU', '1111111111', 'UUUUUU@gmail.com', '2014-12-11', 0, '0000-00-00', 0, 1),
 (9, 0, '', 'RRRRRR', 'RRRRRR', 'RRRRRR', 'RRRRRR', 'RRRRRR', '12345678900', 'RRRRRR@gmail.com', '2014-12-11', 0, '0000-00-00', 0, 4),
@@ -272,7 +304,7 @@ INSERT INTO `person` (`per_id`, `pre_id`, `per_code`, `per_fname`, `per_lname`, 
 (11, 0, '', 'eee', 'eee', 'eee', 'eeeeee', 'eee', '22222222222', 'eee@gmail.com', '2014-12-11', 0, '0000-00-00', 0, 4),
 (12, 0, '', 'TEST CODE', 'TEST CODE', 'TEST CODE', 'TEST CODE', 'TEST CODE', '11111111111', 'TEST_CODE@gmail.com', '2014-12-11', 0, '0000-00-00', 0, 1),
 (13, 0, '', '0000000012', '0000000012', '0000000012', '0000000012', '0000000012', '0000000012', '0000000012@gmail.com', '2014-12-11', 0, '0000-00-00', 0, 1),
-(14, 0, '', '0000000013', '0000000013', '0000000013', '0000000013', '0000000013', '0000000013', '0000000013@gmail.com', '2014-12-11', 0, '0000-00-00', 0, 1),
+(14, 1, '0000000005', '0000000013', '0000000013', '0000000013', '0000000013', '0000000013', '0000000013', '0000000013@gmail.com', '2014-12-11', 0, '2014-12-25', 1, 1),
 (15, 0, '', '0000000014', '0000000014', '0000000014', '0000000014', '0000000014', '0000000014', '0000000014@gmail.com', '2014-12-11', 0, '0000-00-00', 0, 4);
 
 -- --------------------------------------------------------
@@ -284,7 +316,6 @@ INSERT INTO `person` (`per_id`, `pre_id`, `per_code`, `per_fname`, `per_lname`, 
 CREATE TABLE IF NOT EXISTS `prefix` (
   `pre_id` int(11) NOT NULL AUTO_INCREMENT,
   `pre_name` varchar(30) NOT NULL,
-  `pre_desc` varchar(30) NOT NULL,
   `pre_createdate` date NOT NULL,
   `pre_createby` int(11) NOT NULL,
   `pre_updatedate` date NOT NULL,
@@ -296,9 +327,9 @@ CREATE TABLE IF NOT EXISTS `prefix` (
 -- Dumping data for table `prefix`
 --
 
-INSERT INTO `prefix` (`pre_id`, `pre_name`, `pre_desc`, `pre_createdate`, `pre_createby`, `pre_updatedate`, `pre_updateby`) VALUES
-(1, 'MR', 'นาย', '2014-12-21', 0, '2014-12-22', 8),
-(2, 'Miss', 'นาง', '2014-12-22', 8, '2014-12-22', 8);
+INSERT INTO `prefix` (`pre_id`, `pre_name`, `pre_createdate`, `pre_createby`, `pre_updatedate`, `pre_updateby`) VALUES
+(1, 'MR', '2014-12-21', 0, '2014-12-22', 8),
+(2, 'Miss', '2014-12-22', 8, '2014-12-22', 8);
 
 -- --------------------------------------------------------
 
@@ -329,20 +360,20 @@ CREATE TABLE IF NOT EXISTS `product` (
 
 INSERT INTO `product` (`pro_id`, `pro_code`, `pro_name`, `pro_desc`, `pro_amount`, `type_id`, `cat_id`, `pro_unitprice`, `pro_discount`, `pro_createdate`, `pro_createby`, `pro_updatedate`, `pro_updateby`) VALUES
 (1, '0000000002', 'เสื้อ', 'เสื้อ', 140, 2, 2, 14, 7, '2014-12-17', 0, '0000-00-00', 0),
-(2, '0000000003', 'กางเกง', 'กางเกง', 143, 1, 2, 14, 106, '2014-12-17', 0, '2014-12-22', 8),
+(2, '0000000003', 'กางเกง', 'กางเกง', 243, 1, 2, 14, 106, '2014-12-17', 0, '2015-01-09', 1),
 (3, '0000000004', 'เหล้าขาว', 'เหล้าขาว', 155, 1, 1, 0, 3, '2014-12-17', 0, '0000-00-00', 0),
 (4, '0000000005', 'โค๊ก', 'โค๊ก', 145, 6, 2, 14, 7, '2014-12-17', 0, '0000-00-00', 0),
 (5, '0000000006', 'สุรา', 'สุรา', 821, 1, 1, 0, 5, '2014-12-17', 0, '0000-00-00', 0),
-(6, '0000000007', 'ยาดอง', 'ยาดอง', 39, 1, 2, 7, 1, '2014-12-17', 0, '0000-00-00', 0),
+(6, '0000000007', 'ยาดอง', 'ยาดอง', -111072, 1, 2, 7, 1, '2014-12-17', 0, '2015-01-09', 1),
 (7, '0000000008', 'เลย์', 'เลย์', 10011, 1, 3, 1, 1, '2014-12-15', 0, '0000-00-00', 0),
 (8, '0000000009', 'กางเกงใน', 'กางเกงใน', 11, 1, 4, 1, 0, '2014-12-12', 0, '0000-00-00', 0),
 (9, '0000000010', 'แสน๊กแจ๊ค', 'แสน๊กแจ๊ค', 101, 1, 3, 11, 0, '2014-12-15', 0, '0000-00-00', 0),
-(10, '0000000011', 'รองเท้า', 'รองเท้า', 99, 1, 4, 9, 9, '2014-12-12', 0, '0000-00-00', 0),
+(10, '0000000011', 'รองเท้า', 'รองเท้า', 99, 1, 4, 9, 9, '2014-12-12', 0, '2015-01-09', 1),
 (11, '0000000012', 'รีเจ้นซี่', 'รีเจ้นซี่', 1047, 1, 2, 100, 100, '2014-12-17', 0, '0000-00-00', 0),
-(12, '0000000013', '55555555', '55555555', 55555555, 1, 2, 55555555, 55555555, '2014-12-13', 0, '0000-00-00', 0),
-(13, '0000000014', '1', '1', 1, 1, 2, 1, 1, '2014-12-16', 0, '0000-00-00', 0),
-(14, '0000000014', '133', '133', 133, 1, 2, 133, 133, '2014-12-16', 0, '0000-00-00', 0),
-(15, '0000000015', '133', '133', 133, 1, 2, 133, 133, '2014-12-16', 0, '0000-00-00', 0),
+(12, '0000000013', '55555555', '55555555', 55550000, 1, 2, 55555555, 55555555, '2014-12-13', 0, '2015-01-09', 1),
+(13, '0000000014', 'ทดสอบ', 'ทดสอบ', 5556, 1, 2, 1, 1, '2014-12-16', 0, '2015-01-09', 1),
+(14, '0000000014', '133', '133', 10000, 1, 2, 133, 133, '2014-12-16', 0, '2015-01-09', 1),
+(15, '0000000015', '133', '133', 133, 1, 2, 133, 133, '2014-12-16', 0, '2015-01-09', 1),
 (16, '0000000016', 'เสื้อ กล้าม', 'เสื้อ กล้าม', 1, 1, 2, 1, 1, '2014-12-16', 0, '0000-00-00', 0),
 (17, '0000000017', 'CocaCola', 'CocaCola', 11111, 6, 2, 1111, 111, '2014-12-22', 8, '2014-12-22', 8);
 
@@ -372,9 +403,9 @@ CREATE TABLE IF NOT EXISTS `store_contact` (
 --
 
 INSERT INTO `store_contact` (`store_id`, `store_code`, `store_name`, `store_desc`, `store_onwer`, `store_address`, `store_type`, `store_createdate`, `store_createby`, `store_updatedate`, `store_updateby`) VALUES
-(1, 'ven0000000001', 'ร้านขายพาสติก', 'ร้านขายพาสติก ร้านขายพาสติก', 'พูลสวัสดิ์', 'ร้านขายพาสติก', 'ven', '2014-12-11', 0, '0000-00-00', 0),
-(2, 'ven0000000002', 'ร้าน boto', 'ร้าน boto', 'ร้าน boto', 'ร้าน boto', 'ven', '2014-12-11', 0, '0000-00-00', 0),
-(6, 'cus000000003', 'ทำ โมดูล แนบไฟล์เอกสารของโปรเจคทั้งหมด', 'ทำ โมดูล แนบไฟล์เอกสารของโปรเจคทั้งหมด', 'ทำ โมดูล แนบไฟล์เอกสารของโปรเจคทั้งหมด', 'ร้าน botoร้าน botoร้าน botoร้าน botoร้าน boto', 'cus', '2014-12-11', 0, '0000-00-00', 0),
+(1, 'ven000000001', 'ร้านขายพาสติก', 'ร้านขายพาสติก ร้านขายพาสติก', 'พูลสวัสดิ์', 'ร้านขายพาสติก', 'ven', '2014-12-11', 0, '2014-12-23', 1),
+(2, 'ven000000002', 'ร้าน boto', 'ร้าน boto', 'ร้าน boto', 'ร้าน boto', 'ven', '2014-12-11', 0, '2014-12-23', 1),
+(6, 'ven00000003', 'ทำ โมดูล แนบไฟล์เอกสารของโปรเจคทั้งหมด', 'ทำ โมดูล แนบไฟล์เอกสารของโปรเจคทั้งหมด', 'ทำ โมดูล แนบไฟล์เอกสารของโปรเจคทั้งหมด', 'ร้าน botoร้าน botoร้าน botoร้าน botoร้าน boto', 'ven', '2014-12-11', 0, '2014-12-23', 1),
 (7, 'cus000000004', 'รีเจ้นซี่', 'รีเจ้นซี่', 'รีเจ้นซี่', 'รีเจ้นซี่รีเจ้นซี่รีเจ้นซี่', 'cus', '2014-12-11', 0, '0000-00-00', 0),
 (8, 'ven000000005', 'ลองกอง', 'ลองกอง', 'ลองกอง', 'ลองกอง', 'ven', '2014-12-11', 0, '0000-00-00', 0),
 (9, 'cusven000000000', 'ระยอง ฮิ', 'ระยอง ฮิ', 'ระยอง ฮิ', 'ระยอง ฮิ', 'cus', '2014-12-11', 0, '0000-00-00', 0),
@@ -397,7 +428,7 @@ CREATE TABLE IF NOT EXISTS `type` (
   `type_updatedate` date NOT NULL,
   `type_updateby` int(11) NOT NULL,
   PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `type`
