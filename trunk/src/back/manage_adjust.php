@@ -1,7 +1,7 @@
 <?php include '../config/Connect.php'; ?>
 <div class="uk-panel uk-panel-box uk-width-medium-10-10">
     <div class="uk-panel-badge uk-badge uk-badge-info">
-        <a href="index.php?page=form_adjust" class="uk-button uk-button-primary uk-button-mini">เพิ่ม</a>
+        <!--<a href="index.php?page=form_adjust" class="uk-button uk-button-primary uk-button-mini">เพิ่ม</a>-->
     </div>
     <h3 class="uk-panel-title">จัดการกลุ่มสินค้า</h3>
     <table class="uk-table uk-table-condensed uk-table-line dataTable">
