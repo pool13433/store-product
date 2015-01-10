@@ -1,4 +1,4 @@
-<?php include '../config/Connect.php'; ?>
+﻿<?php include '../config/Connect.php'; ?>
 <div class="uk-panel uk-panel-box uk-width-medium-10-10">
     <div class="uk-panel-badge uk-badge uk-badge-info">
         <a href="index.php?page=form_prefix" class="uk-button uk-button-primary uk-button-mini">เพิ่ม</a>
@@ -9,7 +9,7 @@
             <tr>
                 <th>ลำดับ</th>
                 <th>ชื่อ</th>
-                <th>อธิบาย</th>
+                <!--<th>อธิบาย</th>-->
                 <th>วันที่แก้ไข</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
@@ -24,7 +24,7 @@
                 <tr>
                     <td><?= $row['pre_id'] ?></td>
                     <td><?= $row['pre_name'] ?></td>
-                    <td><?= $row['pre_desc'] ?></td>
+                    <!--<td><?= $row['pre_desc'] ?></td>-->
                     <td><?= change_dateYMD_TO_DMY($row['pre_updatedate']) ?></td>
                     <td><a href="index.php?page=form_prefix&id=<?= $row['pre_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
                     <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['pre_id'] ?>, '../database/db_prefix.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
