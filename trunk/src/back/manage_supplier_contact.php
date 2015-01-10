@@ -3,17 +3,19 @@
     <div class="uk-panel-badge uk-badge uk-badge-info">
         <a href="index.php?page=form_store_contact" class="uk-button uk-button-primary uk-button-mini">เพิ่ม</a>
     </div>
-    <h3 class="uk-panel-title">จัดการผู้ใช้งานระบบ</h3>
+    <h3 class="uk-panel-title">ข้อมูลผู้จัดจำหน่าย</h3>
     <table class="uk-table uk-table-condensed uk-table-line dataTable">
         <thead>
             <tr>
-                <th>ลำดับ</th>
-                <th>CODE</th>
-                <th>ชื่อร้าน</th>
-                <th>ร้านเกี่ยวกับ</th>
-                <th>ชื่อเจ้าของ</th>
-                <th>ที่อยู่</th>
-                <th>ประเภท</th>
+               <!-- <th>ลำดับ</th>-->
+                <th>รหัสผู้จัดจำหน่าย</th>
+                <th>ชื่อร้าน/ชื่อบริษัท</th>
+                <!--<th>รายละเอียดการจัดจำหน่าย</th>-->
+               <!-- <th>ชื่อเจ้าของ</th>-->
+                <!--<th>ที่อยู่</th>-->
+                <!--<th>ประเภท</th>-->
+                <th>วันที่สั่งของ</th>
+                <th>วันที่ส่งของ</th>
                 <th>วันที่แก้ไข</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
@@ -26,11 +28,11 @@
             while ($row = mysql_fetch_array($query)):
                 ?>
                 <tr>
-                    <td><?= $row['store_id'] ?></td>
+                    <!--<td><?= $row['store_id'] ?></td>-->
                     <td><?= $row['store_code'] ?></td>
                     <td><?= $row['store_name'] ?></td>
-                    <td><?= $row['store_desc'] ?></td>
-                    <td><?= $row['store_onwer'] ?></td>
+                    <!--<td><?= $row['store_desc'] ?></td>-->
+                    <!--<td><?= $row['store_onwer'] ?></td>-->
                     <td><?= $row['store_address']?></td>                    
                     <td><?= Get_StoreContactStatus($row['store_type']) ?></td>
                     <td><?= change_dateYMD_TO_DMY($row['store_updatedate'])?></td>
