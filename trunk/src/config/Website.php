@@ -147,6 +147,18 @@ function List_Adjust() {
     return $array;
 }
 
+function List_Day() {
+    return array(
+       'sun' => 'อาทิตย์',
+        'mon' => 'จันทร์',
+        'thu' => 'อังคาร',
+        'wen' => 'พุธ',
+        'tues' => 'พฤหัสบดี',
+        'fri' => 'ศุกร์',
+        'sat' => 'เสาร์',
+    );
+}
+
 function Get_BillInStatus($params) {
     $array = List_BillInStatus();
     if (!empty($params)):

@@ -18,7 +18,7 @@ if (!empty($_GET['id'])) {
 <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
     <form class="uk-form uk-form-horizontal" id="frm-category">        
         <fieldset data-uk-margin>
-            <legend>กรอกข้อมูลร้านค้าติดต่อ</legend>
+            <legend>กรอกข้อมูลกลุ่มสินค้า</legend>
             <div class="uk-form-row">
                 <label for="input-name" class="uk-form-label">ชื่อกลุ่มสินค้า</label>
                 <div class="uk-form-controls">
