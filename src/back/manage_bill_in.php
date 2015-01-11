@@ -3,16 +3,18 @@
     <div class="uk-panel-badge uk-badge uk-badge-info">
         <a href="index.php?page=form_bill_in" class="uk-button uk-button-primary uk-button-mini">เพิ่ม</a>
     </div>
-    <h3 class="uk-panel-title">จัดการใบบิลของเข้าร้าน</h3>
+    <h3 class="uk-panel-title">ใบส่งสินค้า/ใบกำกับภาษีจากผู้จัดจำหน่าย</h3>
     <table class="uk-table uk-table-condensed uk-table-line dataTable">
         <thead>
             <tr>
-                <th>ลำดับ</th>
-                <th>ชื่อ</th>
-                <th>อธิบาย</th>
+                <th>เลขที่ใบกำกับภาษี</th>
+                <th>วันที่รับสินค้า</th>
+                <th>รหัสผู้จัดจำหน่าย</th>
+                <th>เลขที่ใบสั่งซื้อ</th>
+                <th>วันที่สั่งซื้อ</th>
                 <th>วันที่แก้ไข/สร้าง</th>
-                <th>แก้ไข</th>
-                <th>ลบ</th>
+               <!-- <th>แก้ไข</th>
+                <th>ลบ</th>-->
             </tr>
         </thead>
         <tbody>
