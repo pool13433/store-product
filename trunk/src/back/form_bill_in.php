@@ -56,6 +56,7 @@ if (!empty($_GET['id'])) {
     $receiver_name = $data['billin_receiver'];
     $autherized_name = $data['billin_autherized'];
 }
+$person = $_SESSION['person'];
 //################# GENARATE CODE ############
 if (empty($Invoices_code)) {
     $sql_gen = "SELECT billin_invoicescode FROM bill_in ORDER BY billin_invoicescode DESC LIMIT 0,1";
@@ -70,11 +71,11 @@ if (empty($Invoices_code)) {
     <form class="uk-form uk-form-horizontal" id="frm-bill_in">        
         <div class="uk-panel">
             <div class="uk-panel-badge uk-badge">...</div>
-            <h3 class="uk-panel-title">เพิ่มข้อมูลสำคัญ</h3>        
+            <!-- <h3 class="uk-panel-title">เพิ่มข้อมูลสำคัญ</h3>        -->
             <fieldset data-uk-margin>
-                <legend>กรอกข้อมูลนำเข้าสินค้า</legend>
+                <legend>ข้อมูลนำเข้าสินค้า</legend>
                 <fieldset data-uk-margin>
-                    <legend>ข้อมูล</legend>
+                    <legend>ข้อมูลใบส่งสินค้า/ใบกำกับภาษี</legend>
                     <div class="uk-grid">
                         <div class="uk-width-5-10">
                             <div class="uk-form-row">
@@ -93,7 +94,7 @@ if (empty($Invoices_code)) {
                             <div class="uk-form-row">
                                 <label class="uk-form-label">เลขที่ใบแจ้งหนี้</label>
                                 <div class="uk-form-controls">
-                                    <input type="text" name="Invoices_code" value="<?= $Invoices_code ?>"
+                                    <input type="text" name="Invoices_code"
                                            class=""
                                            data-validation-engine="validate[required]"
                                            data-errormessage-value-missing="กรุณากรอก เลขใบใบแจ้งหนี้"/>
@@ -104,10 +105,10 @@ if (empty($Invoices_code)) {
                     <div class="uk-grid">
                         <div class="uk-width-5-10">
                             <div class="uk-form-row">
-                                <label class="uk-form-label">วันทีรับเข้า</label>
+                                <label class="uk-form-label">วันที่รับสินค้า</label>
                                 <div class="uk-form-controls">
                                     <input type="text" name="in_date"  value="<?= change_dateYMD_TO_DMY($in_date) ?>"
-                                           class="uk-form-danger uk-width-2-5"
+                                           class="uk-form-danger uk-width-3-5"
                                            data-validation-engine="validate[required]"
                                            data-errormessage-value-missing="กรุณากรอก วันที่รับเข้า"
                                            readonly data-uk-datepicker="{format:'DD/MM/YYYY'}">
@@ -119,48 +120,48 @@ if (empty($Invoices_code)) {
                 <fieldset data-uk-margin>
                     <legend>ซื้อจาก</legend>
                     <div class="uk-form-row">
-                        <label for="input-store_code" class="uk-form-label">รหัสบริษัทห้างร้าน</label>
+                        <label for="input-store_code" class="uk-form-label">รหัสผู้จัดจำหน่าย</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="store_id" id="input-store_id" value="<?= $store_id ?>"/>
                             <input type="text" name="store_name" id="input-store_code" class="uk-form-danger" value="<?= $store_code ?>"/>
-                            <a type="button" class="uk-button uk-button-primary" href="#dialog-search_store_contact" data-uk-modal ><i class="uk-icon-search-plus"></i>ค้นหาบริษัท</a>                            
+                            <a type="button" class="uk-button uk-button-primary" href="#dialog-search_store_contact" data-uk-modal ><i class="uk-icon-search-plus"></i>ค้นหา</a>                            
                         </div>
                     </div>
                     <div class="uk-form-row">
-                        <label for="input-store_onwer" class="uk-form-label">ชื่อจริงเจ้าของห้างร้านบริษัท</label>
+                        <label for="input-store_onwer" class="uk-form-label">ชื่อร้าน/ชื่อบริษัท</label>
                         <div class="uk-form-controls">
                             <input type="text" name="fname" id="input-store_onwer" value="<?= $store_onwer ?>"/>
                         </div>                   
                     </div>                                  
                     <div class="uk-form-row">
-                        <label for="input-store_address" class="uk-form-label">ที่อยู่บริษัท</label>
+                        <label for="input-store_address" class="uk-form-label">ที่อยู่ผู้จัดจำหน่าย</label>
                         <div class="uk-form-controls">
                             <textarea  rows="1" cols="100" name="store_address" id="input-store_address"><?= $store_address ?></textarea>
                         </div>
                     </div>    
                 </fieldset>
                 <fieldset data-uk-margin>
-                    <legend>ข้อมูลใบบิล</legend>
+                    <legend>ข้อมูลเอกสาร</legend>
                     <div class="uk-grid">
                         <div class="uk-width-5-10">
                             <div class="uk-form-row">
-                                <label for="input-doc_code" class="uk-form-label">อ้างถึงเอกสารลูกค้า</label>
+                                <label for="input-doc_code" class="uk-form-label">อ้างถึงเลขที่เอกสารลูกค้า</label>
                                 <div class="uk-form-controls">
                                     <input type="text" name="doc_code" id="input-doc_code" value="<?= $doc_code ?>" class="uk-form-danger"
                                            data-validation-engine="validate[required]"
-                                           data-errormessage-value-missing="กรุณากรอก อ้างถึงเอกสารลูกค้า" />
+                                           data-errormessage-value-missing="กรุณากรอก อ้างถึงเลขที่เอกสารลูกค้า" />
                                 </div>                   
                             </div>
                         </div>
                         <div class="uk-width-5-10">
                             <div class="uk-form-row">
-                                <label for="input-doc_date" class="uk-form-label">อ้างถึงวันที่เอกสารลูกค้า</label>
+                                <label for="input-doc_date" class="uk-form-label">อ้างถึงวันที่เอกสารของลูกค้า</label>
                                 <div class="uk-form-controls">
                                     <input type="text" name="doc_date" id="input-doc_date" value="<?= change_dateYMD_TO_DMY($doc_date) ?>"
-                                           required class="uk-form-danger uk-width-2-5"
+                                           required class="uk-form-danger uk-width-3-5"
                                            readonly data-uk-datepicker="{format:'DD/MM/YYYY'}"
                                            data-validation-engine="validate[required]"
-                                           data-errormessage-value-missing="กรุณากรอก อ้างถึงวันที่เอกสารลูกค้า" />
+                                           data-errormessage-value-missing="กรุณากรอก อ้างถึงวันที่เอกสารของลูกค้า" />
                                 </div>                   
                             </div>
                         </div>
@@ -188,7 +189,7 @@ if (empty($Invoices_code)) {
                                 <label for="input-finfish_date" class="uk-form-label">วันครบกำหนด</label>
                                 <div class="uk-form-controls">
                                     <input type="text" name="finfish_date" id="input-finfish_date"  value="<?= change_dateYMD_TO_DMY($finfish_date) ?>"
-                                           class="uk-form-danger uk-width-2-5"
+                                           class="uk-form-danger uk-width-3-5"
                                            readonly data-uk-datepicker="{format:'DD/MM/YYYY'}"
                                            data-validation-engine="validate[required]"
                                            data-errormessage-value-missing="กรุณากรอก วันครบกำหนด" />
@@ -224,17 +225,25 @@ if (empty($Invoices_code)) {
                     <div class="uk-grid">
                         <div class="uk-width-5-10">
                             <div class="uk-form-row">
-                                <label for="input-location" class="uk-form-label">สถานที่จำหน่ายสินค้า</label>
+                                <label for="input-location" class="uk-form-label">สถานที่จ่ายสินค้า</label>
                                 <div class="uk-form-controls">
                                     <input type="text" name="location" id="input-location" value="<?= $location ?>"
                                            class="uk-form-danger"
                                            data-validation-engine="validate[required]"
-                                           data-errormessage-value-missing="กรุณากรอก ชื่อ" />
+                                           data-errormessage-value-missing="กรุณากรอก สถานที่จ่ายสินค้า" />
                                 </div>                   
                             </div> 
                         </div>
                         <div class="uk-width-5-10">
-
+                            <div class="uk-form-row">
+                                <label for="input-location" class="uk-form-label">แนบไฟล์เอกสาร</label>
+                                <div class="uk-form-controls">
+                                    <input type="file" name="file" id="input-location" value="<?= $file ?>"
+                                           class="uk-form-danger"
+                                           data-validation-engine="validate[required]"
+                                           data-errormessage-value-missing="กรุณากรอก สถานที่จ่ายสินค้า" />
+                                </div>                   
+                            </div> 
                         </div>
                     </div>
                 </fieldset>
@@ -244,23 +253,26 @@ if (empty($Invoices_code)) {
             </fieldset>
 
         </div>
-        <div class="uk-panel">
-            <div class="uk-panel-badge uk-badge" id="my-2">เปิด</div>
-            <h3 class="uk-panel-title">เพิ่มรายการสินค้าเข้า</h3>
+        <div class="uk-panel"><br/><br/>
+            <!--<div class="uk-panel-badge uk-badge" id="my-2">เปิด</div>-->
+            <h3 class="uk-panel-title"><legend>ข้อมูลรายการสินค้าเข้า</legend></h3>
             <fieldset data-uk-margin>
-                <legend>เพิ่มสินค้าเข้า</legend>                        
-                <div class="uk-grid">
-                    <div class="uk-width-5-10">
-                        <div class="uk-form-row">
-                            <a class="uk-button uk-button-primary" href="#dialod-search_product" data-uk-modal id="btn-search_product" onclick="loadDialogDataTable()">
-                                <i class="uk-icon-search-plus"></i> ค้นหาสินค้า</a> 
-                            <a class="uk-button uk-button-success" href="#dialod-new_product" data-uk-modal onclick="loadDialogNewProduct()">
-                                <i class="uk-icon-search-plus"></i> สร้างสินค้าใหม่</a>
-                        </div> 
-                    </div>
+                <legend>สินค้าเข้า</legend>   
+                <?php if ($person['pre_status'] == '2'): ?>
+                    <div class="uk-grid">
+                        <div class="uk-width-5-10">
+                            <div class="uk-form-row">
+                                <a class="uk-button uk-button-primary" href="#dialod-search_product" 
+                                   data-uk-modal id="btn-search_product" onclick="loadDialogDataTable()">
+                                    <i class="uk-icon-search-plus" ></i> ค้นหาสินค้า</a> 
+                                <a class="uk-button uk-button-success" href="#dialod-new_product" data-uk-modal onclick="loadDialogNewProduct()">
+                                    <i class="uk-icon-search-plus" ></i> สร้างสินค้าใหม่</a>
+                            </div> 
+                        </div>
+                    <?php endif; ?>
                     <div class="uk-width-5-10" style="text-align: right">
                         <div class="uk-alert uk-alert-close">
-                            <h3>ชื่อเจ้าหน้าที่บันทึกข้อมูล <?= $_SESSION['person']['per_fname'] . "  " . $_SESSION['person']['per_lname'] ?></h3>                            
+                            <h3>เจ้าหน้าที่บันทึกข้อมูล <?= $_SESSION['person']['per_fname'] . "  " . $_SESSION['person']['per_lname'] ?></h3>                            
                         </div>                        
                     </div>
                 </div>
@@ -269,7 +281,7 @@ if (empty($Invoices_code)) {
                         <thead>
                             <tr>
                                 <th>รหัสสินค้า</th>
-                                <th>ชื่อรายการสินค้า</th>
+                                <th>รายการสินค้า</th>
                                 <th>ชนิด</th>
                                 <th>จำนวนในบิล</th>
                                 <th>จำนวนนับจริง</th>
@@ -295,20 +307,20 @@ if (empty($Invoices_code)) {
                 </div>
                 <div class="uk-width-5-10" style="text-align: right">
                     <div class="uk-form-row">
-                        <label class="uk-form-label">ยอดชำระก่อน + VAT</label>
+                        <label class="uk-form-label">มูลค่าสินค้าก่อนภาษี</label>
                         <input type="text" name="pricebeforevat" id="input-beforeprice" value="<?= $pricebeforevat ?>" 
                                readonly
                                data-validation-engine="validate[required]"
-                               data-errormessage-value-missing="กรุณากรอก ยอดชำระรวม"/>
+                               data-errormessage-value-missing="กรุณากรอก มูลค่าสินค้าก่อนภาษี"/>
                     </div>
                     <div class="uk-form-row">
-                        <label class="uk-form-label">VAT</label>
+                        <label class="uk-form-label">จำนวนภาษีมูลค่าเพิ่ม 7%</label>
                         <input type="text" name="vat" id="input-vat" onchange="calculateVat(this)" value="<?= $vat ?>"
                                data-validation-engine="validate[required]"
-                               data-errormessage-value-missing="กรุณากรอก VAT"/>
+                               data-errormessage-value-missing="กรุณากรอก จำนวนภาษีมูลค่าเพิ่ม 7%"/>
                     </div>
                     <div class="uk-form-row">
-                        <label class="uk-form-label">ยอดชำระหลัง + VAT</label>
+                        <label class="uk-form-label">จำนวนเงินรวมทั้งสิ้น</label>
                         <input type="text" name="priceaftervat" id="input-afterprice" value="<?= $priceaftervat ?>"
                                readonly/>
                     </div>
@@ -337,7 +349,7 @@ if (empty($Invoices_code)) {
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
                             <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="0" checked/>                  
-                            รอ อนมุติการรับของเข้า
+                            รออนุมัติการรับของเข้าคลังสินค้า ผ่านการตรวจรับจากพนักงานประจำโกดังแล้ว
                         </div> 
                     </div>
                 </div>
@@ -345,8 +357,16 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
+                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="1" checked/>                  
+                            รออนุมัติการรับของเข้าคลังสินค้า ผ่านการสอบจากพนักงานประจำหน้าร้านแล้ว
+                        </div> 
+                    </div>
+                </div>
+                <div class="uk-grid">
+                    <div class="uk-width-4-4">
+                        <div class="uk-form-row">
                             <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="2"/>                  
-                            อนมุติการรับของเข้า ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
+                            อนุมัติการรับของเข้าคลังสินค้า ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
                         </div> 
                     </div>
                 </div>
@@ -355,7 +375,7 @@ if (empty($Invoices_code)) {
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">                            
                             <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="3"/>                  
-                            อนมุติการรับของเข้า ไม่ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
+                            อนุมัติการรับของเข้าคลังสินค้า ไม่ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
                         </div> 
                     </div>
                 </div>                
@@ -364,22 +384,28 @@ if (empty($Invoices_code)) {
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
                             <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="0" checked/>                  
-                            รอ อนมุติการรับของเข้า
+                            รออนุมัติการรับของเข้าคลังสินค้า ผ่านการสอบจากพนักงานประจำหน้าร้านแล้ว <!--รออนุมัติการรับของเข้าคลังสินค้า ผ่านการตรวจรับจากพนักงานประจำโกดังแล้ว-->
                         </div> 
                     </div>
                 </div>
                 <hr/>
-            <?php endif; ?>            
-            <div class="uk-form-row">
-                <div class="uk-form-controls">
-                    <button class="uk-button uk-button-primary uk-button-large" type="submit">
-                        <i class="uk-icon-save"></i> บันทึก
-                    </button>
-                    <a class="uk-button uk-button-danger uk-button-large" href="index.php?page=manage_bill_in">
-                        <i class="uk-icon-arrow-circle-left"></i> ยกเลิก
-                    </a>
+            <?php endif; ?>
+            <div class="uk-grid">
+                <div class="uk-width-3-4">
+                    <div class="uk-form-row">
+                        <div class="uk-form-controls" style="text-align: center">
+                            <?php if($person['1']): ?>
+                            <button class="uk-button uk-button-primary uk-button-large" type="submit">
+                                <i class="uk-icon-save"></i> ยืนยัน
+                            </button>
+                            <?php endif; ?>
+                            <a class="uk-button uk-button-danger uk-button-large" href="index.php?page=manage_bill_in">
+                                <i class="uk-icon-arrow-circle-left"></i> ยกเลิก
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div>            
         </div>        
     </form>
 </div>
@@ -387,200 +413,200 @@ if (empty($Invoices_code)) {
 <?php include './dialog_new_product.php'; ?>
 <?php include './dialog_search_store_contact.php'; ?>
 <script type="text/javascript">
-    var LIST_PRODUCT_REMOVE = new Array();
-    $(document).ready(function() {
-        var valid = $('#frm-bill_in').validationEngine('attach', {
-            promptPosition: "centerTop",
-            scroll: false,
-            onValidationComplete: function(form, status) {
-                if (status == true) {
-                    //PostJson('frm-bill_in', '../database/db_bill_in.php?method=create');
-                    $.ajax({
-                        url: '../database/db_bill_in.php?method=create',
-                        data: {
-                            form: JSON.stringify(getFormData('frm-bill_in')), //JSON.stringify($('#frm-bill_in').serializeArray()),
-                            list_product: get_data_table(),
-                            list_product_remove: JSON.stringify(LIST_PRODUCT_REMOVE),
-                        },
-                        type: 'post',
-                        dataType: 'json',
-                        success: function(data) {
-                            if (data.status == 'success') {
-                                uk_notify(data.msg, 'success', 3);
-                                redirectDelay(data.url, 2);
-                            } else {
-                                uk_notify(data.msg, 'error', 3);
-                            }
-                        }
-                    })
-                }
+                                       var LIST_PRODUCT_REMOVE = new Array();
+                                       $(document).ready(function() {
+                                           var valid = $('#frm-bill_in').validationEngine('attach', {
+                                               promptPosition: "centerTop",
+                                               scroll: false,
+                                               onValidationComplete: function(form, status) {
+                                                   if (status == true) {
+                                                       //PostJson('frm-bill_in', '../database/db_bill_in.php?method=create');
+                                                       $.ajax({
+                                                           url: '../database/db_bill_in.php?method=create',
+                                                           data: {
+                                                               form: JSON.stringify(getFormData('frm-bill_in')), //JSON.stringify($('#frm-bill_in').serializeArray()),
+                                                               list_product: get_data_table(),
+                                                               list_product_remove: JSON.stringify(LIST_PRODUCT_REMOVE),
+                                                           },
+                                                           type: 'post',
+                                                           dataType: 'json',
+                                                           success: function(data) {
+                                                               if (data.status == 'success') {
+                                                                   uk_notify(data.msg, 'success', 3);
+                                                                   redirectDelay(data.url, 2);
+                                                               } else {
+                                                                   uk_notify(data.msg, 'error', 3);
+                                                               }
+                                                           }
+                                                       })
+                                                   }
 
-            }
-        });
-        valid.css({
-            'box-shadow': '2px 2px 2px 2px #888888',
-            'padding': '20px',
-        });
-        // ############ LOAD EDIT FROM ##########
-        //#############LOAD PRODUCT ###########
-        LIST_PRODUCT_REMOVE = new Array();
-        $.ajax({
-            url: '../database/db_bill_in.php?method=get_pro_product_by_biil_id',
-            data: {bill_id: $('#bill_id').val()},
-            type: 'post',
-            dataType: 'json',
-            success: function(data) {
-                $.each(data, function(index, object) {
-                    //select_product(object.pro_code, object.pro_name);
-                    var tr = '<tr>';
-                    tr += '<td style="width:10%"><input type="hidden" name="id" value="' + object.billinpro_id + '"/>' + object.pro_code + '</td>';
-                    tr += '<td style="width:8%">' + object.pro_name + '</td>';
-                    tr += '<td style="width:5%">' + object.type_name + '</td>';
-                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="isInt(this)" value="' + object.billinpro_noinbill + '"/></td>';
-                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billinpro_nocount + '"/></td>';
-                    tr += '<td><input type="text" class="uk-width-small-9-10" value="' + object.billinpro_remark + '"/></td>';
-                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billinpro_unitprice + '"/></td>';
-                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="isInt(this)" value="' + object.billinpro_unitprice + '"/></td>';
-                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10" onchange="calculateTotalPrice()" value="' + object.billinpro_totalprice + '"/></td>';
-                    tr += '<td><button type="button" class="uk-button uk-button-mini uk-button-danger" onclick="remove_tr(this,' + object.billinpro_id + ')"><i class="uk-icon-trash-o"></i>ลบ</button></td>';
-                    tr += '</tr>';
-                    $('#table_product').append(tr);
-                    calculateTotalPrice();
-                });
-                appendDropdownProductType();
-            }
-        });
-        //#############LOAD PRODUCT ###########
-        // ############ LOAD EDIT FROM ##########
-    });
-    function loadDialogDataTable() {
-        $('#content-product').load('load_product.php');
-    }
-    function loadDialogNewProduct() {
-        $('#frm-product')[0].reset();
-    }
+                                               }
+                                           });
+                                           valid.css({
+                                               'box-shadow': '2px 2px 2px 2px #888888',
+                                               'padding': '20px',
+                                           });
+                                           // ############ LOAD EDIT FROM ##########
+                                           //#############LOAD PRODUCT ###########
+                                           LIST_PRODUCT_REMOVE = new Array();
+                                           $.ajax({
+                                               url: '../database/db_bill_in.php?method=get_pro_product_by_biil_id',
+                                               data: {bill_id: $('#bill_id').val()},
+                                               type: 'post',
+                                               dataType: 'json',
+                                               success: function(data) {
+                                                   $.each(data, function(index, object) {
+                                                       //select_product(object.pro_code, object.pro_name);
+                                                       var tr = '<tr>';
+                                                       tr += '<td style="width:10%"><input type="hidden" name="id" value="' + object.billinpro_id + '"/>' + object.pro_code + '</td>';
+                                                       tr += '<td style="width:8%">' + object.pro_name + '</td>';
+                                                       tr += '<td style="width:5%">' + object.type_name + '</td>';
+                                                       tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="isInt(this)" value="' + object.billinpro_noinbill + '"/></td>';
+                                                       tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billinpro_nocount + '"/></td>';
+                                                       tr += '<td><input type="text" class="uk-width-small-9-10" value="' + object.billinpro_remark + '"/></td>';
+                                                       tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billinpro_unitprice + '"/></td>';
+                                                       tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="isInt(this)" value="' + object.billinpro_unitprice + '"/></td>';
+                                                       tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10" onchange="calculateTotalPrice()" value="' + object.billinpro_totalprice + '"/></td>';
+                                                       tr += '<td><button type="button" class="uk-button uk-button-mini uk-button-danger" onclick="remove_tr(this,' + object.billinpro_id + ')"><i class="uk-icon-trash-o"></i>ลบ</button></td>';
+                                                       tr += '</tr>';
+                                                       $('#table_product').append(tr);
+                                                       calculateTotalPrice();
+                                                   });
+                                                   appendDropdownProductType();
+                                               }
+                                           });
+                                           //#############LOAD PRODUCT ###########
+                                           // ############ LOAD EDIT FROM ##########
+                                       });
+                                       function loadDialogDataTable() {
+                                           $('#content-product').load('load_product.php');
+                                       }
+                                       function loadDialogNewProduct() {
+                                           $('#frm-product')[0].reset();
+                                       }
 
-    function get_data_table() {
+                                       function get_data_table() {
 //            var list_tr = $('#table_product').children('tr');
 //            console.log(' list length : '+list_tr.length);
-        var list_product = new Array();
-        $('#table_product tr').each(function(index, element) {
-            console.log(' index : ' + index + ' element : ' + element);
-            var obj_product = get_tr_value(element);
-            list_product.push(obj_product);
-        });
-        console.log('list_product : ' + JSON.stringify(list_product));
-        return JSON.stringify(list_product);
-    }
-    function get_tr_value(element) {
-        var cell0 = $(element).find('td:eq(0)');
-        var txt_code = $(cell0).text();
-        console.log('txt_code : ' + txt_code);
-        var cell0 = $(element).find('td:eq(0)');
-        var txt_id = $(cell0).find('input:hidden').val();
+                                           var list_product = new Array();
+                                           $('#table_product tr').each(function(index, element) {
+                                               console.log(' index : ' + index + ' element : ' + element);
+                                               var obj_product = get_tr_value(element);
+                                               list_product.push(obj_product);
+                                           });
+                                           console.log('list_product : ' + JSON.stringify(list_product));
+                                           return JSON.stringify(list_product);
+                                       }
+                                       function get_tr_value(element) {
+                                           var cell0 = $(element).find('td:eq(0)');
+                                           var txt_code = $(cell0).text();
+                                           console.log('txt_code : ' + txt_code);
+                                           var cell0 = $(element).find('td:eq(0)');
+                                           var txt_id = $(cell0).find('input:hidden').val();
 
-        var cell1 = $(element).find('td:eq(1)');
-        var txt_name = $(cell1).text();
-        var cell2 = $(element).find('td:eq(2)');
-        var input_type = $(cell2).text();
-        var cell3 = $(element).find('td:eq(3)');
-        var input_noinbill = $(cell3).find('input:text').val();
-        var cell4 = $(element).find('td:eq(4)');
-        var input_nocount = $(cell4).find('input:text').val();
-        var cell5 = $(element).find('td:eq(5)');
-        var input_remark = $(cell5).find('input:text').val();
-        var cell6 = $(element).find('td:eq(6)');
-        var input_price = $(cell6).find('input:text').val();
-        var cell7 = $(element).find('td:eq(7)');
-        var input_discount = $(cell7).find('input:text').val();
-        var cell8 = $(element).find('td:eq(8)');
-        var input_total_price = $(cell8).find('input:text').val();
-        //console.log('cell5 : ' + input_total_price);
-        var obj_product = new Object();
-        obj_product.pro_id = txt_id;
-        obj_product.pro_code = txt_code;
-        obj_product.pro_name = txt_name;
-        obj_product.pro_noinbill = input_noinbill;
-        obj_product.pro_nocount = input_nocount;
-        obj_product.pro_remark = input_remark;
-        obj_product.pro_type = input_type;
-        obj_product.pro_price = input_price;
-        obj_product.pro_discount = input_discount;
-        obj_product.pro_total_price = input_total_price;
-        return obj_product;
-    }
-    function search_store() {
-        var store_id = $('#input-store_id');
-        var store_code = $('#input-store_code');
-        var store_onwer = $('#input-store_onwer');
-        var store_address = $('#input-store_address');
-        $.ajax({
-            url: '../database/db_store_contact.php?method=searchstore',
-            data: {code: store_code.val()},
-            type: 'post',
-            dataType: 'json',
-            success: function(data) {
-                if (data.status != 'fail') {
-                    store_id.val(data.store_id);
-                    store_code.val(data.store_code);
-                    store_onwer.val(data.store_onwer);
-                    store_address.val(data.store_address);
-                } else {
-                    uk_notify('ไม่พบข้อมูลที่ค้นหา', 'danger', 3);
-                    store_id.val("");
-                    //store_code.val("");
-                    store_onwer.val("");
-                    store_address.val("");
-                }
-            }
-        });
-    }
-    function remove_tr(element, id) {
-        var parent_tr = $(element).parent().parent();
-        console.log('element : ' + $(element).parent().parent());
-        var obj_product = get_tr_value(parent_tr);
-        var tr = $(element).closest('tr').remove();
-        LIST_PRODUCT_REMOVE.push(obj_product);
-        console.log('JSON.stringify(yourArray); ' + JSON.stringify(LIST_PRODUCT_REMOVE));
-        console.log('LIST_PRODUCT_REMOVE SIZE : ' + LIST_PRODUCT_REMOVE.length);
-    }
-    function calculatePrice(element) {
-        if (isInt(element)) {
-            var parent_tr = $(element).parent().parent();
-            var cell4 = $(parent_tr).find('td:eq(4)');
-            var input_nocount = $(cell4).find('input:text').val();
-            var cell6 = $(parent_tr).find('td:eq(6)');
-            var input_price = $(cell6).find('input:text').val();
-            if (isNaN(input_nocount))
-                input_nocount = 0;
-            if (isNaN(input_price))
-                input_price = 0;
-            var calPrice = parseInt(input_nocount) * parseInt(input_price);
-            if (isNaN(calPrice))
-                calPrice = 0;
-            var cell8 = $(parent_tr).find('td:eq(8)');
-            var object_totalprice = $(cell8).find('input:text');
-            $(object_totalprice).val(calPrice);
-            calculateTotalPrice();
-        }
-    }
-    function calculateTotalPrice() {
-        var totalPrcice = 0;
-        $('#table_product tr').each(function(index, element) {
-            var price = $(element).find('td:eq(8)').find('input:text').val();
-            //console.log('price : ' + price);
-            totalPrcice = totalPrcice + parseInt(price);
-        });
-        $('#input-beforeprice').val(totalPrcice);
-    }
-    function calculateVat(element) {
-        if (isInt(element)) {
-            var beforeprice = $('#input-beforeprice').val();
-            var vat = $('#input-vat').val();
-            var calVat = ((beforeprice * vat) / 100);
-            var afterprice = parseInt(beforeprice) + parseInt(calVat);
-            $('#input-afterprice').val(afterprice);
-        }
-    }
+                                           var cell1 = $(element).find('td:eq(1)');
+                                           var txt_name = $(cell1).text();
+                                           var cell2 = $(element).find('td:eq(2)');
+                                           var input_type = $(cell2).text();
+                                           var cell3 = $(element).find('td:eq(3)');
+                                           var input_noinbill = $(cell3).find('input:text').val();
+                                           var cell4 = $(element).find('td:eq(4)');
+                                           var input_nocount = $(cell4).find('input:text').val();
+                                           var cell5 = $(element).find('td:eq(5)');
+                                           var input_remark = $(cell5).find('input:text').val();
+                                           var cell6 = $(element).find('td:eq(6)');
+                                           var input_price = $(cell6).find('input:text').val();
+                                           var cell7 = $(element).find('td:eq(7)');
+                                           var input_discount = $(cell7).find('input:text').val();
+                                           var cell8 = $(element).find('td:eq(8)');
+                                           var input_total_price = $(cell8).find('input:text').val();
+                                           //console.log('cell5 : ' + input_total_price);
+                                           var obj_product = new Object();
+                                           obj_product.pro_id = txt_id;
+                                           obj_product.pro_code = txt_code;
+                                           obj_product.pro_name = txt_name;
+                                           obj_product.pro_noinbill = input_noinbill;
+                                           obj_product.pro_nocount = input_nocount;
+                                           obj_product.pro_remark = input_remark;
+                                           obj_product.pro_type = input_type;
+                                           obj_product.pro_price = input_price;
+                                           obj_product.pro_discount = input_discount;
+                                           obj_product.pro_total_price = input_total_price;
+                                           return obj_product;
+                                       }
+                                       function search_store() {
+                                           var store_id = $('#input-store_id');
+                                           var store_code = $('#input-store_code');
+                                           var store_onwer = $('#input-store_onwer');
+                                           var store_address = $('#input-store_address');
+                                           $.ajax({
+                                               url: '../database/db_store_contact.php?method=searchstore',
+                                               data: {code: store_code.val()},
+                                               type: 'post',
+                                               dataType: 'json',
+                                               success: function(data) {
+                                                   if (data.status != 'fail') {
+                                                       store_id.val(data.store_id);
+                                                       store_code.val(data.store_code);
+                                                       store_onwer.val(data.store_onwer);
+                                                       store_address.val(data.store_address);
+                                                   } else {
+                                                       uk_notify('ไม่พบข้อมูลที่ค้นหา', 'danger', 3);
+                                                       store_id.val("");
+                                                       //store_code.val("");
+                                                       store_onwer.val("");
+                                                       store_address.val("");
+                                                   }
+                                               }
+                                           });
+                                       }
+                                       function remove_tr(element, id) {
+                                           var parent_tr = $(element).parent().parent();
+                                           console.log('element : ' + $(element).parent().parent());
+                                           var obj_product = get_tr_value(parent_tr);
+                                           var tr = $(element).closest('tr').remove();
+                                           LIST_PRODUCT_REMOVE.push(obj_product);
+                                           console.log('JSON.stringify(yourArray); ' + JSON.stringify(LIST_PRODUCT_REMOVE));
+                                           console.log('LIST_PRODUCT_REMOVE SIZE : ' + LIST_PRODUCT_REMOVE.length);
+                                       }
+                                       function calculatePrice(element) {
+                                           if (isInt(element)) {
+                                               var parent_tr = $(element).parent().parent();
+                                               var cell4 = $(parent_tr).find('td:eq(4)');
+                                               var input_nocount = $(cell4).find('input:text').val();
+                                               var cell6 = $(parent_tr).find('td:eq(6)');
+                                               var input_price = $(cell6).find('input:text').val();
+                                               if (isNaN(input_nocount))
+                                                   input_nocount = 0;
+                                               if (isNaN(input_price))
+                                                   input_price = 0;
+                                               var calPrice = parseInt(input_nocount) * parseInt(input_price);
+                                               if (isNaN(calPrice))
+                                                   calPrice = 0;
+                                               var cell8 = $(parent_tr).find('td:eq(8)');
+                                               var object_totalprice = $(cell8).find('input:text');
+                                               $(object_totalprice).val(calPrice);
+                                               calculateTotalPrice();
+                                           }
+                                       }
+                                       function calculateTotalPrice() {
+                                           var totalPrcice = 0;
+                                           $('#table_product tr').each(function(index, element) {
+                                               var price = $(element).find('td:eq(8)').find('input:text').val();
+                                               //console.log('price : ' + price);
+                                               totalPrcice = totalPrcice + parseInt(price);
+                                           });
+                                           $('#input-beforeprice').val(totalPrcice);
+                                       }
+                                       function calculateVat(element) {
+                                           if (isInt(element)) {
+                                               var beforeprice = $('#input-beforeprice').val();
+                                               var vat = $('#input-vat').val();
+                                               var calVat = ((beforeprice * vat) / 100);
+                                               var afterprice = parseInt(beforeprice) + parseInt(calVat);
+                                               $('#input-afterprice').val(afterprice);
+                                           }
+                                       }
 </script>
 
