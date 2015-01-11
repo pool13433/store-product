@@ -30,7 +30,7 @@ if (empty($code)) {
     $query = mysql_query($sql) or die(mysql_error());
     $result = mysql_fetch_assoc($query);
     $last_code = substr($result['pro_code'], 4);
-    $code = Gen_Code(intval($last_code));
+    $code = 'ITEM'.Gen_Code(intval($last_code));
 }
 //################# GENARATE CODE ############
 ?>
@@ -40,7 +40,7 @@ if (empty($code)) {
         <fieldset data-uk-margin>
             <legend>กรอกข้อมูลสินค้า</legend>
             <div class="uk-form-row">
-                <label for="input-code" class="uk-form-label">CODE</label>
+                <label for="input-code" class="uk-form-label">รหัสสินค้า</label>
                 <div class="uk-form-controls">
                     <input type="text" name="code" id="input-code" value="<?= $code ?>" readonly/>
                 </div>
@@ -55,7 +55,7 @@ if (empty($code)) {
                 </div>
             </div>   
             <div class="uk-form-row">
-                <label for="input-desc" class="uk-form-label">อธิบาย</label>
+                <label for="input-desc" class="uk-form-label">รายละเอียดสินค้า</label>
                 <div class="uk-form-controls">
                     <textarea  rows="5" cols="50" name="desc" id="input-desc" 
                                data-validation-engine="validate[required]"
@@ -109,21 +109,21 @@ if (empty($code)) {
                 </div>
             </div>
             <div class="uk-form-row">
-                <label for="input-price" class="uk-form-label">ราคา</label>
+                <label for="input-price" class="uk-form-label">ราคาซื้อ/หน่วย</label>
                 <div class="uk-form-controls">
                     <input type="text" name="price" id="input-price" value="<?= $price ?>" 
                            data-validation-engine="validate[required,custom[number]]"
                            data-errormessage-value-missing="กรุณากรอก ราคา"
-                           data-errormessage-custom-error="กรุณากรอกเป็นตัวเลขเท่านั้น"/>
+                           data-errormessage-custom-error="กรุณากรอกเป็นตัวเลขเท่านั้น"/> บาท
                 </div>
             </div> 
             <div class="uk-form-row">
-                <label for="input-discount" class="uk-form-label">ส่วนลด</label>
+                <label for="input-discount" class="uk-form-label">ราคาขาย/หน่วย</label>
                 <div class="uk-form-controls">
                     <input type="text" name="discount" id="input-discount" value="<?= $discount ?>" 
                            data-validation-engine="validate[required,custom[number]]"
                            data-errormessage-value-missing="กรุณากรอก ส่วนลด"
-                           data-errormessage-custom-error="กรุณากรอกเป็นตัวเลขเท่านั้น"/>
+                           data-errormessage-custom-error="กรุณากรอกเป็นตัวเลขเท่านั้น"/> บาท
                 </div>
             </div> 
             <div class="uk-form-row">

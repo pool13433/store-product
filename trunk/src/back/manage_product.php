@@ -3,21 +3,21 @@
     <div class="uk-panel-badge uk-badge uk-badge-info">
         <a href="index.php?page=form_product" class="uk-button-primary uk-button-mini">เพิ่ม</a>
     </div>
-    <h3 class="uk-panel-title">จัดการสินค้า</h3>
+    <h3 class="uk-panel-title">จัดการข้อมูลสินค้า</h3>
     <table class="uk-table uk-table-condensed uk-table-line dataTable">
         <thead>
             <tr>
-                <th>ปรับสมดุล</th>
-                <th>ลำดับ</th>
-                <th>CODE</th>
-                <th>ชื่อสินค้า</th>
-                <th>อธิบาย</th>
-                <th>จำนวน</th>
-                <th>ราคา</th>
-                <th>ส่วนลด</th>
-                <th>วันที่แก้ไข</th>
-                <th>แก้ไข</th>
-                <th>ลบ</th>
+                <!--<th>ปรับสมดุล</th>
+                <th>ลำดับ</th>-->
+                <th style="text-align: center">รหัสสินค้า</th>
+                <th style="text-align: center">ชื่อสินค้า</th>
+                <!--<th>อธิบาย</th>-->
+                <!--<th style="text-align: center">จำนวนสินค้าคงเหลือ</th>-->
+                <th style="width: 13%">ราคาซื้อ(บาท)</th>
+                <th style="width: 13%">ราคาขาย(บาท)</th>
+                <th style="text-align: center">วันที่แก้ไข</th>
+                <th style="text-align: center">แก้ไข</th>
+                <th style="text-align: center">ลบ</th>
             </tr>
         </thead>
         <tbody>
@@ -27,21 +27,21 @@
             while ($row = mysql_fetch_array($query)):
                 ?>
                 <tr>
-                    <td>
+<!--                    <td>
                         <a  class="uk-button uk-button-primary uk-button-mini" href="#dialog-adjust_product<?= $row['pro_id'] ?>" data-uk-modal>
                             <i class="uk-icon-edit"></i> ปรับ
                         </a>
-                        <!--<a  class="uk-button uk-button-success uk-button-mini" href="index.php?page=manage_adjust&id=<?= $row['pro_id'] ?>">
+                        <a  class="uk-button uk-button-success uk-button-mini" href="index.php?page=manage_adjust&id=<?= $row['pro_id'] ?>">
                             <i class="uk-icon-edit"></i> แก้ไข
-                        </a>-->
-                        <!-- modal -->
+                        </a>
+                         modal 
                         <div id="dialog-adjust_product<?= $row['pro_id'] ?>" class="uk-modal">
                             <?php
                             $sql_product = "SELECT * FROM product WHERE pro_id = " . $row['pro_id'];
                             $query_product = mysql_query($sql_product) or die(mysql_error());
                             $data = mysql_fetch_assoc($query_product);
                             ?>
-                            <!-- This is the modal -->
+                             This is the modal 
                             <div class="uk-modal-dialog uk-modal-dialog-frameless" style="padding: 20px;">
                                 <a href="" class="uk-modal-close uk-close uk-close-alt"></a>
                                 <div class="uk-panel">
@@ -109,18 +109,18 @@
                             });
                         </script>
                         </div>
-                        <!-- modal -->
-                    </td>
-                    <td><?= $row['pro_id'] ?></td>
-                    <td><?= $row['pro_code'] ?></td>
-                    <td><?= $row['pro_name'] ?></td>
-                    <td><?= $row['pro_desc'] ?></td>
-                    <td><?= $row['pro_amount'] ?></td>
-                    <td><?= $row['pro_unitprice'] ?></td>
-                    <td><?= $row['pro_discount'] ?></td>
-                    <td><?= change_dateYMD_TO_DMY($row['pro_updatedate']) ?></td>
-                    <td><a href="index.php?page=form_product&id=<?= $row['pro_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
-                    <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['pro_id'] ?>, '../database/db_product.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
+                         modal 
+                    </td>-->
+                    <!--<td><?= $row['pro_id'] ?></td>-->
+                    <td style="text-align: center"><?= $row['pro_code'] ?></td>
+                    <td style="text-align: center"><?= $row['pro_name'] ?></td>
+                   <!-- <td><?= $row['pro_desc'] ?></td>-->
+                   <!-- <td style="text-align: center"><?= $row['pro_amount'] ?></td>-->
+                    <td style="text-align: right"><?= $row['pro_unitprice'] ?></td>
+                    <td style="text-align: right"><?= $row['pro_discount'] ?></td>
+                    <td  style="text-align: center"><?= change_dateYMD_TO_DMY($row['pro_updatedate']) ?></td>
+                    <td  style="text-align: center"><a href="index.php?page=form_product&id=<?= $row['pro_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
+                    <td  style="text-align: center"><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['pro_id'] ?>, '../database/db_product.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
