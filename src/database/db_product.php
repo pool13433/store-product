@@ -15,7 +15,8 @@ switch ($_GET['method']) {
             $desc = $_POST['desc'];
             $type = $_POST['type'];
             $cat_id = $_POST['cat_id'];
-            $price = $_POST['price'];
+            $price_buy = $_POST['price_buy'];
+            $price_sell = $_POST['price_sell'];            
             $discount = $_POST['discount'];
             $amount = $_POST['amount'];
 
@@ -23,12 +24,12 @@ switch ($_GET['method']) {
                 $sql = " INSERT INTO product (";
                 $sql .= " pro_code,pro_name,pro_desc,";
                 $sql .= " pro_amount,type_id,cat_id,";
-                $sql .= " pro_unitprice,pro_discount,";
+                $sql .= " pro_unitprice_buy,pro_unitprice_sell,pro_discount,";
                 $sql .= " pro_createdate,pro_createby,";
                 $sql .= " pro_updatedate,pro_updateby)VALUES(";
                 $sql .= " '$code','$name','$desc',";
                 $sql .= " $amount,$type,$cat_id,";
-                $sql .= " $price,$discount,NOW(),$per_id,";
+                $sql .= " $price_buy,$price_sell,$discount,NOW(),$per_id,";
                 $sql .= " NOW(),$per_id";
                 $sql .= " )";
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
@@ -40,7 +41,8 @@ switch ($_GET['method']) {
                 $sql .= " pro_amount = $amount,";
                 $sql .= " type_id = $type,";
                 $sql .= " cat_id = $cat_id,";
-                $sql .= " pro_unitprice = $price,";
+                $sql .= " pro_unitprice_buy = $price_buy,";
+                $sql .= " pro_unitprice_sell = $price_sell,";
                 $sql .= " pro_discount = $discount,";
                 $sql .= " pro_updatedate = NOW(),";
                 $sql .= " pro_updateby = $per_id";

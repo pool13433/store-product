@@ -5,7 +5,8 @@ $name = "";
 $desc = "";
 $type = "";
 $cat_id = "";
-$price = "";
+$price_buy = "";
+$price_sell = "";
 $discount = "";
 $amount = "";
 $createdate = "";
@@ -101,14 +102,23 @@ if (empty($code)) {
                             </div>
                         </div>
                         <div class="uk-form-row">
-                            <label for="input-price" class="uk-form-label">ราคา</label>
+                            <label for="input-price_buy" class="uk-form-label">ราคาซื้อ/หน่วย</label>
                             <div class="uk-form-controls">
-                                <input type="text" name="price" id="input-price" value="<?= $price ?>" 
+                                <input type="text" name="price_buy" id="input-price_buy" value="<?= $price_buy ?>" 
                                        data-validation-engine="validate[required,custom[number]]"
-                                       data-errormessage-value-missing="กรุณากรอก ราคา"
-                                       data-errormessage-custom-error="กรุณากรอกเป็นตัวเลขเท่านั้น"/>
+                                       data-errormessage-value-missing="กรุณากรอก ราคาซื้อ/หน่วย"
+                                       data-errormessage-custom-error="กรุณากรอกเป็นตัวเลขเท่านั้น"/> บาท
                             </div>
                         </div> 
+                        <div class="uk-form-row">
+                            <label for="input-price_sell" class="uk-form-label">ราคาขาย/หน่วย</label>
+                            <div class="uk-form-controls">
+                                <input type="text" name="price_sell" id="input-price_sell" value="<?= $price_sell ?>" 
+                                       data-validation-engine="validate[required,custom[number]]"
+                                       data-errormessage-value-missing="กรุณากรอก ราคาขาย/หน่วย"
+                                       data-errormessage-custom-error="กรุณากรอกเป็นตัวเลขเท่านั้น"/> บาท
+                            </div>
+                        </div>  
                         <div class="uk-form-row">
                             <label for="input-discount" class="uk-form-label">ส่วนลด</label>
                             <div class="uk-form-controls">
@@ -143,12 +153,12 @@ if (empty($code)) {
                 if (status == true) {
                     //PostJson('frm-product', '../database/db_product.php?method=create');
                     $.ajax({
-                        url : '../database/db_product.php?method=create',
-                        data : $('#frm-product').serialize(),
+                        url: '../database/db_product.php?method=create',
+                        data: $('#frm-product').serialize(),
                         type: 'post',
-                        dataType : 'json',
-                        success : function(data){
-                            if(data.status == 'success'){
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.status == 'success') {
                                 $.UIkit.modal("#dialod-new_product").hide();
                             }
                         }

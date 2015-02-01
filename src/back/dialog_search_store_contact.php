@@ -17,17 +17,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php                    
+                    <?php
                     $sql = "SELECT * FROM store_contact WHERE 1=1";
-                    $page = $_GET['page'];
-                    if (!empty($page)) {
-                        //ven,cus
-                        if ($page == 'form_bill_in') {
-                            $sql .= " AND store_type = 'ven'";
-                        } else if ($page == 'form_bill_out') {
-                            $sql .= " AND store_type = 'cus'";
-                        }
-                    }
                     $sql .= " order by store_id";
                     $query = mysql_query($sql) or die(mysql_error());
                     while ($row = mysql_fetch_array($query)):
@@ -44,7 +35,6 @@
                             <td><?= $row['store_desc'] ?></td>
                             <td><?= $row['store_onwer'] ?></td>
                             <td><?= $row['store_address'] ?></td>
-                            <td><?= Get_StoreContactStatus($row['store_type']) ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

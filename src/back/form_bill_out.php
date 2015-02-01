@@ -25,7 +25,7 @@ if (!empty($_GET['id'])) {
     $customer_address = $data['store_address'];
     $billcode = $data['billout_code'];
     $billdate = $data['billout_outdate'];
-    $officer = $data['officer_id'];
+    $sales_name = $data['sales_name'];
     $pay_condition = $data['pay_id'];
     $receiver = $data['billout_receiver'];
     $sender = $data['billout_sender'];

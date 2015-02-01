@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>ระบบจัดการสต๊อกสินค้า</title>
@@ -25,6 +25,14 @@
         <!-- datatools-->
         <script type="text/javascript" src="../../lib/TableTools-2.2.3/js/dataTables.tableTools.js"></script>
         <!-- datatools-->
+
+        <!-- muti select -->
+        <!--        <link rel="stylesheet" href="../../lib/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.css"/>
+                <script type="text/javascript" src="../../lib/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.js"></script>-->
+        <link rel="stylesheet" type="text/css" href="../../lib/select2-3.5.0/select2.css"/>
+        <script type="text/javascript" src="../../lib/select2-3.5.0/select2.min.js"></script>
+        <!-- muti select -->
+
         <script type="text/javascript" src="../../js/script.js"></script>
     </head>
     <body>
@@ -61,7 +69,7 @@
                                     while ($data = mysql_fetch_array($query_minprodut)):
                                         ?>
                                         <li>
-                                            <div class="uk-alert uk-alert-success"><?=$data['pro_name']?> คงเหลือ <?=$data['pro_amount']?> ชิ้น </div>                                                                                                                            
+                                            <div class="uk-alert uk-alert-success"><?= $data['pro_name'] ?> คงเหลือ <?= $data['pro_amount'] ?> ชิ้น </div>                                                                                                                            
                                         </li>
                                     <?php endwhile; ?>
                                     <?php

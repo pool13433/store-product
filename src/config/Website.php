@@ -116,6 +116,7 @@ function List_StoreContactStatus() {
     return $array;
 }
 
+
 function Get_StoreContactStatus($params) {
     $array = List_StoreContactStatus();
     if (!empty($params)):
@@ -131,10 +132,12 @@ function Get_StoreContactStatus($params) {
 
 function List_BillInStatus() {
     $array = array(
-        '0' => 'ลบ',
-        '1' => 'ปกติ รับของเรียบร้อย',
-        '2' => 'อนุมัติ ผ่าน',
-        '3' => 'อนุมัติ ไม่ผ่าน'
+        '1' => 'รออนุมัติการรับของเข้าคลังสินค้า [ผ่านการตรวจรับจากพนักงานประจาโกดังแล้ว]',
+        
+        '2' => 'รออนุมัติการรับของเข้าคลังสินค้า [ผ่านการสอบจากพนักงานประจาหน้าร้านแล้ว]',
+        
+        '3' => 'อนุมัติการรับของเข้าคลังสินค้า ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)',
+        '4' => 'อนุมัติการรับของเข้าคลังสินค้า ไม่ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)'
     );
     return $array;
 }
@@ -149,14 +152,27 @@ function List_Adjust() {
 
 function List_Day() {
     return array(
-       'sun' => 'อาทิตย์',
-        'mon' => 'จันทร์',
-        'thu' => 'อังคาร',
-        'wen' => 'พุธ',
-        'tues' => 'พฤหัสบดี',
-        'fri' => 'ศุกร์',
-        'sat' => 'เสาร์',
+        '1' => 'อาทิตย์',
+        '2' => 'จันทร์',
+        '3' => 'อังคาร',
+        '4' => 'พุธ',
+        '5' => 'พฤหัสบดี',
+        '6' => 'ศุกร์',
+        '7' => 'เสาร์',
     );
+}
+
+function Get_Day($params) {
+    $array = List_Day();
+    if (!empty($params)):
+        $result = "";
+        foreach ($array as $key => $value):
+            if ($key == $params):
+                $result = $value;
+            endif;
+        endforeach;
+        return $result;
+    endif;
 }
 
 function Get_BillInStatus($params) {

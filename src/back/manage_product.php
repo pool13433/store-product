@@ -15,6 +15,7 @@
                 <!--<th style="text-align: center">จำนวนสินค้าคงเหลือ</th>-->
                 <th style="width: 13%">ราคาซื้อ(บาท)</th>
                 <th style="width: 13%">ราคาขาย(บาท)</th>
+                <th style="width: 13%">ส่วนลด</th>
                 <th style="text-align: center">วันที่แก้ไข</th>
                 <th style="text-align: center">แก้ไข</th>
                 <th style="text-align: center">ลบ</th>
@@ -116,7 +117,8 @@
                     <td style="text-align: center"><?= $row['pro_name'] ?></td>
                    <!-- <td><?= $row['pro_desc'] ?></td>-->
                    <!-- <td style="text-align: center"><?= $row['pro_amount'] ?></td>-->
-                    <td style="text-align: right"><?= $row['pro_unitprice'] ?></td>
+                    <td style="text-align: right"><?= $row['pro_unitprice_buy'] ?></td>
+                    <td style="text-align: right"><?= $row['pro_unitprice_sell'] ?></td>
                     <td style="text-align: right"><?= $row['pro_discount'] ?></td>
                     <td  style="text-align: center"><?= change_dateYMD_TO_DMY($row['pro_updatedate']) ?></td>
                     <td  style="text-align: center"><a href="index.php?page=form_product&id=<?= $row['pro_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>

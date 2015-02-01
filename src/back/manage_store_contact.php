@@ -7,13 +7,11 @@
     <table class="uk-table uk-table-condensed uk-table-line dataTable">
         <thead>
             <tr>
-                <!--<th>ลำดับ</th>-->
                 <th>รหัสลูกค้า</th>
                 <th>ชื่อร้าน</th>
                 <th>รายละเอียดร้าน</th>
                 <th>ชื่อเจ้าของร้าน</th>
                 <th>ที่อยู่</th>
-                <!--<th>ประเภท</th>-->
                 <th>วันที่แก้ไข</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
@@ -21,21 +19,19 @@
         </thead>
         <tbody>
             <?php
-            $sql = "SELECT * FROM store_contact order by store_id";
+            $sql = "SELECT * FROM store_contact order by sto_id";
             $query = mysql_query($sql) or die(mysql_error());
             while ($row = mysql_fetch_array($query)):
                 ?>
                 <tr>
-                   <!-- <td><?= $row['store_id'] ?></td>-->
-                    <td><?= $row['store_code'] ?></td>
-                    <td><?= $row['store_name'] ?></td>
-                    <td><?= $row['store_desc'] ?></td>
-                    <td><?= $row['store_onwer'] ?></td>
-                    <td><?= $row['store_address']?></td>                    
-                    <!-- <td><?= Get_StoreContactStatus($row['store_type']) ?></td>-->
-                    <td><?= change_dateYMD_TO_DMY($row['store_updatedate'])?></td>
-                    <td><a href="index.php?page=form_store_contact&id=<?= $row['store_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
-                    <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['store_id'] ?>, '../database/db_store_contact.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
+                    <td><?= $row['sto_code'] ?></td>
+                    <td><?= $row['sto_name'] ?></td>
+                    <td><?= $row['sto_desc'] ?></td>
+                    <td><?= $row['sto_onwer'] ?></td>
+                    <td><?= $row['sto_address'] ?></td>                    
+                    <td><?= change_dateYMD_TO_DMY($row['sto_updatedate']) ?></td>
+                    <td><a href="index.php?page=form_store_contact&id=<?= $row['sto_id'] ?>"><button class="uk-button uk-button-success"><i class="uk-icon-edit"></i></button></a></td>
+                    <td><button class="uk-button uk-button-danger" onclick="deleteItem(<?= $row['sto_id'] ?>, '../database/db_store_contact.php?method=delete')"><i class="uk-icon-trash-o"></i></button></td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
