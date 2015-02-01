@@ -6,33 +6,33 @@ $name = "";
 $desc = "";
 $prefix = "";
 $onwer = "";
+$pid = "";
 $address = "";
-$type = "";
+$telephone = "";
 $createdate = "";
-    $pid = "";
-    $telephone = "";
+$createby = '';
+$updatedate = "";
+$updateby = '';
 if (!empty($_GET['id'])) { // แก้ไข
-    $sql = "SELECT * FROM store_contact WHERE store_id = " . $_GET['id'];
+    $sql = "SELECT * FROM store_contact WHERE sto_id = " . $_GET['id'];
     $query = mysql_query($sql) or die(mysql_error());
     $data = mysql_fetch_assoc($query);
-    $id = $data['store_id'];
-    $code = $data['store_code'];
-    $name = $data['store_name'];
-    $desc = $data['store_desc'];
-     $prefix = $data['store_prefix']; // คำนำหน้าชื่อ
-    $onwer = $data['store_onwer'];
-    $address = $data['store_address'];
-    $type = $data['store_type'];
-    $createdate = $data['store_createdate'];
-    $pid = $data['store_pid'];
-    $telephone = $data['store_telephone'];
+    $id = $data['sto_id'];
+    $code = $data['sto_code'];
+    $name = $data['sto_name'];
+    $desc = $data['sto_desc'];
+    $prefix = $data['pre_id'];
+    $onwer = $data['sto_onwer'];
+    $address = $data['sto_address'];
+    $createdate = $data['sto_createdate'];    
+    $telephone = $data['sto_telephone'];
 }
 //################# GENARATE CODE ############
 if (empty($code)) {
-    $sql = "SELECT store_code FROM store_contact ORDER BY store_code DESC LIMIT 0,1";
+    $sql = "SELECT sto_id FROM store_contact ORDER BY sto_code DESC LIMIT 0,1";
     $query = mysql_query($sql) or die(mysql_error());
     $result = mysql_fetch_assoc($query);
-    $last_code = substr($result['store_code'], 4);
+    $last_code = $result['sto_id'];
     $code = 'CUS' . Gen_Code(intval($last_code));
 }
 //################# GENARATE CODE ############
@@ -66,10 +66,10 @@ if (empty($code)) {
                                ><?= $desc ?></textarea>
                 </div>
             </div>    
-             <div class="uk-form-row">
+            <div class="uk-form-row">
                 <label for="input-code" class="uk-form-label">คำนำหน้าชื่อ</label>
                 <div class="uk-form-controls">
-                    <?php include '../config/dropdown_prefix.php';?>
+                    <?php include '../config/dropdown_prefix.php'; ?>
                 </div>
             </div>
             <div class="uk-form-row">
@@ -104,30 +104,15 @@ if (empty($code)) {
                            data-validation-engine="validate[required]"
                            data-errormessage-value-missing="กรุณากรอก เบอร์โทรศัพท์" />
                 </div>
-            </div>  
-            <!--<div class="uk-form-row">
-                <label class="uk-form-label" for="form-s-s">กลุ่ม/ประเภท</label>
-                <div class="uk-form-controls">
-            <?php $listStoreContact = List_StoreContactStatus(); ?>
-                    <select id="form-s-s" name="type">                        
-            <?php foreach ($listStoreContact as $key => $data): ?>
-                <?php if ($status == $key): ?>
-                                        <option value="<?= $key ?>" selected><?= $data ?></option>
-                <?php else : ?>
-                                        <option value="<?= $key ?>"><?= $data ?></option>
-                <?php endif; ?>
-            <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>-->
+            </div>              
             <div class="uk-form-row">
                 <div class="uk-form-controls">
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">
                         <i class="uk-icon-save"></i> บันทึก
                     </button>
-                    <button class="uk-button uk-button-danger uk-button-large" type="button">
+                    <a class="uk-button uk-button-danger uk-button-large" href="index.php?page=manage_store_contact">
                         <i class="uk-icon-arrow-circle-left"></i> ยกเลิก
-                    </button>
+                    </a>
                 </div>
             </div>
         </fieldset>

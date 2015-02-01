@@ -10,42 +10,44 @@ switch ($_GET['method']) {
     case 'create':
         if (!empty($_POST)) {
             $id = $_POST['id'];
+            $code = $_POST['code'];
             $name = $_POST['name'];
             $desc = $_POST['desc'];
             $address = $_POST['address'];
+            $prefix = $_POST['prefix'];
             $onwer = $_POST['onwer'];
-            $type = $_POST['type'];
             $pid = $_POST['pid'];
             $telephone = $_POST['telephone'];
             if (empty($_POST['id'])) {
-                $code = $_POST['type'] . $_POST['code'];
-                $sql = " INSERT INTO store_contact(";
-                $sql .= " store_code,store_name,store_desc,store_onwer,";
-                $sql .= " store_address,store_type,store_pid,store_telephone,store_createdate,store_createby,";
-                $sql .= " store_updatedate,store_updateby)VALUES(";
-                $sql .= " '$code','$name','$desc','$onwer',";
-                $sql .= " '$address','$type','$pid','$telephone',NOW(),$per_id,";
-                $sql .= " NOW(),$per_id";
+
+                $sql = " INSERT INTO `store_contact`";
+                $sql .= " ( `sto_code`, `sto_name`, `sto_desc`,";
+                $sql .= " `pre_id`, `sto_onwer`, sto_pid,`sto_address`, `sto_telephone`,";
+                $sql .= " `sto_createdate`, `sto_createby`, `sto_updatedate`,";
+                $sql .= " `sto_updateby`) VALUES (";
+                $sql .= " '$code','$name','$desc',";
+                $sql .= " $prefix,'$onwer','$pid','$address','$telephone',";
+                $sql .= " NOW(),$per_id,NOW(),$per_id";
                 $sql .= " )";
+
                 $msg = "เพิ่มข้อมูลเข้าระบบสำเร็จ";
             } else {
-                $code = $_POST['type'] . substr($_POST['code'], 4);
                 $sql = " UPDATE store_contact SET ";
-                $sql .= " store_code = '$code',";
-                $sql .= " store_name = '$name',";
-                $sql .= " store_desc = '$desc',";
-                $sql .= " store_onwer = '$onwer',";
-                $sql .= " store_address = '$address',";
-                $sql .= " store_type = '$type',";
-                $sql .= " store_pid = '$pid',";
-                $sql .= " store_telephone = '$telephone',";
-                $sql .= " store_updatedate = NOW(),";
-                $sql .= " store_updateby = $per_id";
-                $sql .= " WHERE store_id = $id";
+                $sql .= " `sto_code`='$code',";
+                $sql .= " `sto_name`='$name',";
+                $sql .= " `sto_desc`='$desc',";
+                $sql .= " `pre_id`=$prefix,";
+                $sql .= " `sto_onwer`='$onwer',";
+                $sql .= " sto_pid = '$pid',";
+                $sql .= " `sto_address`='$address',";
+                $sql .= " `sto_telephone`='$telephone',";
+                $sql .= " `sto_updatedate`=NOW(),";
+                $sql .= " `sto_updateby`=$per_id";
+                $sql .= " WHERE `sto_id` = $id";
                 $msg = "แก้ไขข้อมูลเข้าระบบสำเร็จ";
             }
             //echo 'sql : '.$sql;
-            $query = mysql_query($sql) or die(mysql_error());
+            $query = mysql_query($sql) or die(mysql_error() . 'sql :' . $sql);
             //$row = mysql_affected_rows();
             if ($query) {
                 $status = "success";
@@ -63,7 +65,7 @@ switch ($_GET['method']) {
 
     case 'delete':
         $id = $_GET['id'];
-        $sql = "DELETE FROM store_contact WHERE store_id=$id";
+        $sql = "DELETE FROM store_contact WHERE sto_id=$id";
         $query = mysql_query($sql) or die(mysql_error());
         if ($query)
             echo ReturnJson('success', '', 'ลบสำเร็จ', '');

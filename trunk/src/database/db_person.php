@@ -26,14 +26,8 @@ switch ($_GET['method']) {
             $msg = 'เข้าระบบสำเร็จ';
             if ($result['per_status'] == 0) {
                 $url = 'index.php?page=welcome';
-            } else if ($result['per_status'] == 1) { // admin
+            } else { 
                 $url = 'back/index.php?page=home';
-            } else if ($result['per_status'] == 2) { //officer
-                $url = 'index.php?page=welcome';
-            } else if ($result['per_status'] == 3) { // customer
-                $url = 'index.php?page=welcome';
-            } else if ($result['per_status'] == 4) { // vender
-                $url = 'index.php?page=welcome';
             }
         } else {
             $status = 'fail';

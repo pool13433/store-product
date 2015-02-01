@@ -17,6 +17,13 @@ function redirectDelay(url, timer) {
         window.location.href = url; //will redirect to your blog page (an ex: blog.html)
     }, (timer * 1000)); //will call the function after 2 secs.
 }
+function print_properties_in_object(object) {
+    var output = '';
+    for (var property in object) {
+        output += property + ': ' + object[property] + '; ';
+    }
+    return output;
+}
 function reloadDelay(timer) {
     setTimeout(function() {
         window.location.reload();//will redirect to your blog page (an ex: blog.html)
@@ -136,3 +143,4 @@ function getFormData(formId) {
 
     return indexed_array;
 }
+

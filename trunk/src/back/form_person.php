@@ -30,10 +30,10 @@ if (!empty($_GET['id'])) {
 }
 //################# GENARATE CODE ############
 if (empty($code)) {
-    $sql = "SELECT per_code FROM person ORDER BY per_code DESC LIMIT 0,1";
+    $sql = "SELECT per_id FROM person ORDER BY per_code DESC LIMIT 0,1";
     $query = mysql_query($sql) or die(mysql_error());
     $result = mysql_fetch_assoc($query);
-    $code = 'EMP' .Gen_Code(intval($result['per_code']));
+    $code = 'EMP' .Gen_Code(intval($result['per_id']));
 }
 //################# GENARATE CODE ############
 ?>
@@ -151,9 +151,9 @@ if (empty($code)) {
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">
                         <i class="uk-icon-save"></i> บันทึก
                     </button>
-                    <button class="uk-button uk-button-danger uk-button-large" type="button">
+                    <a class="uk-button uk-button-danger uk-button-large" href="index.php?page=manage_person">
                         <i class="uk-icon-arrow-circle-left"></i> ยกเลิก
-                    </button>
+                    </a>
                 </div>
             </div>
         </fieldset>
