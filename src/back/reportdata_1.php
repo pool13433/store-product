@@ -41,7 +41,7 @@
                 <td><?= $data['pro_code'] ?></td>
                 <td><?= $data['pro_name'] ?></td>
                 <td><?= $data['pro_amount'] ?></td>
-                <td><?= $data['pro_unitprice'] ?></td>
+                <td><?= $data['pro_unitprice_buy'] ?></td>
                 <td><?= $data['pro_discount'] ?></td>
                 <td><?= $data['type_name'] ?></td>
                 <td><?= $data['cat_name'] ?></td>                

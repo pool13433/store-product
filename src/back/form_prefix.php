@@ -2,7 +2,6 @@
 include '../config/Connect.php';
 $id = "";
 $name = "";
-$desc = "";
 $createdate = "";
 if (!empty($_GET['id'])) {
     $sql = "SELECT * FROM prefix WHERE pre_id = " . $_GET['id'];
@@ -10,7 +9,6 @@ if (!empty($_GET['id'])) {
     $data = mysql_fetch_assoc($query);
     $id = $data['pre_id'];
     $name = $data['pre_name'];
-    $desc = $data['pre_desc'];
     $createdate = $data['pre_createdate'];
 }
 ?>
@@ -27,16 +25,7 @@ if (!empty($_GET['id'])) {
                            data-validation-engine="validate[required]"
                            data-errormessage-value-missing="กรุณากรอก ชื่อ" />
                 </div>
-            </div>   
-            <!--<div class="uk-form-row">
-                <label for="input-desc" class="uk-form-label">อธิบาย</label>
-                <div class="uk-form-controls">
-                    <textarea  rows="5" cols="50" name="desc" id="input-desc" 
-                               data-validation-engine="validate[required]"
-                               data-errormessage-value-missing="คำอธิบาย" 
-                               ><?= $desc ?></textarea>
-                </div>
-            </div>-->                                 
+            </div>                               
             <div class="uk-form-row">
                 <div class="uk-form-controls">
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">

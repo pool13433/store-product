@@ -13,28 +13,27 @@
                         <th>ร้านเกี่ยวกับ</th>
                         <th>ชื่อเจ้าของ</th>
                         <th>ที่อยู่</th>
-                        <th>ประเภท</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $sql = "SELECT * FROM store_contact WHERE 1=1";
-                    $sql .= " order by store_id";
+                    $sql .= " order by sto_id";
                     $query = mysql_query($sql) or die(mysql_error());
                     while ($row = mysql_fetch_array($query)):
                         ?>
                         <tr>
                             <td>
                                 <button type="button" class="uk-button uk-button-success" 
-                                        onclick="select_store_contact(<?= $row['store_id'] ?>, '<?= $row['store_code'] ?>', '<?= $row['store_onwer'] ?>', '<?= $row['store_address'] ?>')"><i class="uk-icon-plus-square-o"></i>
+                                        onclick="select_sto_contact(<?= $row['sto_id'] ?>, '<?= $row['sto_code'] ?>', '<?= $row['sto_onwer'] ?>', '<?= $row['sto_address'] ?>')"><i class="uk-icon-plus-square-o"></i>
                                 </button>
                             </td>
-                            <td><?= $row['store_id'] ?></td>
-                            <td><?= $row['store_code'] ?></td>
-                            <td><?= $row['store_name'] ?></td>
-                            <td><?= $row['store_desc'] ?></td>
-                            <td><?= $row['store_onwer'] ?></td>
-                            <td><?= $row['store_address'] ?></td>
+                            <td><?= $row['sto_id'] ?></td>
+                            <td><?= $row['sto_code'] ?></td>
+                            <td><?= $row['sto_name'] ?></td>
+                            <td><?= $row['sto_desc'] ?></td>
+                            <td><?= $row['sto_onwer'] ?></td>
+                            <td><?= $row['sto_address'] ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
@@ -43,7 +42,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function select_store_contact(id, code, name, address) {
+    function select_sto_contact(id, code, name, address) {
         $('#input-store_id').val(id);
         $('#input-store_code').val(code);
         $('#input-store_onwer').val(name);

@@ -20,7 +20,7 @@
                 <td><?= $row['pro_code'] ?></td>
                 <td><?= $row['pro_name'] ?></td>
                 <td><?= $row['pro_amount'] ?></td>
-                <td><?= $row['pro_unitprice'] ?></td>
+                <td><?= $row['pro_unitprice_buy'] ?></td>
                 <td><?= $row['pro_discount'] ?></td>
                 <td><?= $row['pro_createdate'] ?></td>
             </tr>

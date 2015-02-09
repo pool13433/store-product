@@ -16,15 +16,15 @@ switch ($_GET['method']) {
         $tax_code = $form['tax_code'];
         $Invoices_code = $form['Invoices_code'];
         $in_date = $form['in_date'];
-        $store_id = $form['store_id'];
-        $store_name = $form['store_name'];
-        $store_address = $form['store_address'];
+        $sup_id = $form['sup_id'];
+        $sup_name = $form['sup_name'];
+        $sup_address = $form['sup_address'];
         $doc_code = $form['doc_code'];
         $doc_date = $form['doc_date'];
         $pay_condition = $form['pay_condition'];
         $finfish_date = $form['finfish_date'];
         $pay_code = $form['pay_code'];
-        $officer_id = $form['officer_id'];
+        $sales_name = $form['sales_name'];
         $location = $form['location'];
         $weight = $form['weight'];
         $pricebeforevat = $form['pricebeforevat'];
@@ -39,32 +39,39 @@ switch ($_GET['method']) {
         // ######## INSERT BILL_IN ##########
         if (empty($form['bill_id'])) { // INSERT NEW BILL
             $sql_bill = "INSERT INTO bill_in (`billin_invoicescode`,";
-            $sql_bill .= " `billin_taxcode`, `billin_indate`, `store_id`, `billin_doccode`,";
+            $sql_bill .= " `billin_taxcode`, `billin_indate`, `sup_id`, `billin_doccode`,";
             $sql_bill .= " `billin_docdate`, `pay_id`, `billin_finishdate`, `billin_paycode`,";
-            $sql_bill .= " `officer_id`, `billin_localtioncode`,";
+            $sql_bill .= " `sales_name`, `billin_localtioncode`,";
             $sql_bill .= " `billin_weight`, `billin_pricebeforevat`, `billin_vat`,";
             $sql_bill .= " `billin_priceaftervat`, `billin_sender`, `billin_receiver`, `billin_autherized`,";
-            $sql_bill .= " `billin_createdate`,`billin_createby`,`billin_updatedate`,`billin_updateby`)VALUES(";
+            $sql_bill .= " `billin_createdate`,`billin_createby`,`billin_updatedate`,`billin_updateby`";
+            if (!empty($form['approve'])):
+                $sql_bill .= " ,billin_status";
+            endif;
+            $sql_bill .= " )VALUES(";
             $sql_bill .= " '$Invoices_code',";
-            $sql_bill .= " '$tax_code','" . change_dateDMY_TO_YMD($in_date) . "','$store_id','$doc_code',";
+            $sql_bill .= " '$tax_code','" . change_dateDMY_TO_YMD($in_date) . "',$sup_id,'$doc_code',";
             $sql_bill .= " '" . change_dateDMY_TO_YMD($doc_date) . "','$pay_condition','" . change_dateDMY_TO_YMD($finfish_date) . "','$pay_code',";
-            $sql_bill .= " $officer_id,'$location',";
+            $sql_bill .= " '$sales_name','$location',";
             $sql_bill .= " $weight,$pricebeforevat,$vat,$priceaftervat,";
             $sql_bill .= " '$receiver_name','$sender_name','$autherized_name',";
             $sql_bill .= " NOW(),$per_id,NOW(),$per_id";
+            if (!empty($form['approve'])):
+                $sql_bill .= "," . $approve;
+            endif;
             $sql_bill .= " )";
         } else {
             $sql_bill = " UPDATE bill_in SET ";
             $sql_bill .= " billin_invoicescode = '$Invoices_code',";
             $sql_bill .= " billin_taxcode = '$tax_code',";
             $sql_bill .= " billin_indate = '" . change_dateDMY_TO_YMD($in_date) . "',";
-            $sql_bill .= " store_id = $store_id,";
+            $sql_bill .= " sup_id = $sup_id,";
             $sql_bill .= " billin_doccode = '$doc_code',";
             $sql_bill .= " billin_docdate = '" . change_dateDMY_TO_YMD($doc_date) . "',";
             $sql_bill .= " pay_id = $pay_condition,";
             $sql_bill .= " billin_finishdate = '" . change_dateDMY_TO_YMD($finfish_date) . "',";
             $sql_bill .= " billin_paycode = '$pay_code',";
-            $sql_bill .= " officer_id = $officer_id,";
+            $sql_bill .= " sales_name = '$sales_name',";
             $sql_bill .= " billin_localtioncode = '$location',";
             $sql_bill .= " `billin_weight`=$weight,";
             $sql_bill .= " `billin_pricebeforevat`=$pricebeforevat,";
@@ -75,7 +82,7 @@ switch ($_GET['method']) {
             $sql_bill .= " `billin_autherized`='$autherized_name',";
             $sql_bill .= " billin_updatedate = NOW(),";
             $sql_bill .= " billin_updateby = $per_id";
-            if ($approve == 2 || $approve == 3):
+            if (!empty($form['approve'])):
                 // สถานะ  '0' => 'ลบ','1' => 'ปกติ รับของเรียบร้อย','2' => 'อนุมัติ ผ่าน','3' => 'อนุมัติ ไม่ผ่าน'
                 $sql_bill .= " ,billin_status = $approve";
             endif;

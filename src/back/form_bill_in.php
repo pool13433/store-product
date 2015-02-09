@@ -25,10 +25,15 @@ $priceaftervat = "";
 $sender_name = "";
 $receiver_name = "";
 $autherized_name = "";
+$bill_status_1 = '';
+$bill_status_2 = '';
+$bill_status_3 = '';
+$bill_status_4 = '';
+$bill_status_5 = '';
 if (!empty($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "SELECT * FROM bill_in bi";
-    $sql .= " JOIN supplier_contact sc ON sc.sup_id = bi.sup_id";
+    $sql .= " LEFT JOIN supplier_contact sc ON sc.sup_id = bi.sup_id";
     $sql .= " WHERE billin_id = $id";
     $query = mysql_query($sql) or die(mysql_error());
     $data = mysql_fetch_assoc($query);
@@ -39,7 +44,7 @@ if (!empty($_GET['id'])) {
     $sup_id = $data['sup_id'];
     $sup_code = $data['sup_code'];
     $sup_name = $data['sup_name'];
-    $sup_onwer = $data['sup_onwer'];
+    $sup_onwer = $data['sup_desc'];
     $sup_address = $data['sup_address'];
     $doc_code = $data['billin_doccode'];
     $doc_date = $data['billin_docdate'];
@@ -55,6 +60,27 @@ if (!empty($_GET['id'])) {
     $sender_name = $data['billin_sender'];
     $receiver_name = $data['billin_receiver'];
     $autherized_name = $data['billin_autherized'];
+    //############### status #########
+    switch ($data['billin_status']) {
+        case 1:
+            $bill_status_1 = 'checked';
+            break;
+        case 2:
+            $bill_status_2 = 'checked';
+            break;
+        case 3:
+            $bill_status_3 = 'checked';
+            break;
+        case 4:
+            $bill_status_4 = 'checked';
+            break;
+        case 5:
+            $bill_status_5 = 'checked';
+            break;
+        default:
+            break;
+    }
+    //############### status #########
 }
 $person = $_SESSION['person'];
 //################# GENARATE CODE ############
@@ -95,7 +121,7 @@ if (empty($Invoices_code)) {
                                 <label class="uk-form-label">เลขที่ใบแจ้งหนี้</label>
                                 <div class="uk-form-controls">
                                     <input type="text" name="Invoices_code"
-                                           class=""
+                                           class="" value="<?= $Invoices_code ?>"
                                            data-validation-engine="validate[required]"
                                            data-errormessage-value-missing="กรุณากรอก เลขใบใบแจ้งหนี้"/>
                                 </div>
@@ -239,9 +265,7 @@ if (empty($Invoices_code)) {
                                 <label for="input-location" class="uk-form-label">แนบไฟล์เอกสาร</label>
                                 <div class="uk-form-controls">
                                     <input type="file" name="file" id="input-location" value="<?= $file ?>"
-                                           class="uk-form-danger"
-                                           data-validation-engine="validate[required]"
-                                           data-errormessage-value-missing="กรุณากรอก สถานที่จ่ายสินค้า" />
+                                           class="uk-form-success"/>
                                 </div>                   
                             </div> 
                         </div>
@@ -348,7 +372,7 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
-                            <input type="checkbox" class="uk-form-danger uk-width-9-10" name="approve" value="1"/>                  
+                            <input type="checkbox" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_1?> value="1"/>                  
                             รออนุมัติการรับของเข้าคลังสินค้า [ผ่านการตรวจรับจากพนักงานประจาโกดังแล้ว]
                         </div> 
                     </div>
@@ -358,7 +382,7 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
-                            <input type="checkbox" class="uk-form-danger uk-width-9-10" name="approve" value="2"/>                  
+                            <input type="checkbox" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_2?> value="2"/>                  
                             รออนุมัติการรับของเข้าคลังสินค้า [ผ่านการสอบจากพนักงานประจาหน้าร้านแล้ว]
                         </div> 
                     </div>
@@ -367,7 +391,7 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
-                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="3"/>                  
+                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_3?> value="3"/>                  
                             อนุมัติการรับของเข้าคลังสินค้า ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
                         </div> 
                     </div>
@@ -376,7 +400,7 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">                            
-                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" value="4"/>                  
+                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_4?> value="4"/>                  
                             อนุมัติการรับของเข้าคลังสินค้า ไม่ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
                         </div> 
                     </div>
@@ -420,14 +444,15 @@ if (empty($Invoices_code)) {
     $(document).ready(function() {
 
         //############# checkbox approve ############
-        checkbox_approve('approve','btn-save');
+        checkbox_approve('approve', 'btn-save');
         //############# checkbox approve ############
 
         var valid = $('#frm-bill_in').validationEngine('attach', {
             promptPosition: "centerTop",
             scroll: false,
             onValidationComplete: function(form, status) {
-                if (status == true) {
+                if (status) {
+                    console.log('save.....');
                     //PostJson('frm-bill_in', '../database/db_bill_in.php?method=create');
                     $.ajax({
                         url: '../database/db_bill_in.php?method=create',
@@ -473,8 +498,8 @@ if (empty($Invoices_code)) {
                     tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchasup_codenge="isInt(this)" value="' + object.billinpro_noinbill + '"/></td>';
                     tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billinpro_nocount + '"/></td>';
                     tr += '<td><input type="text" class="uk-width-small-9-10" value="' + object.billinpro_remark + '"/></td>';
-                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.billinpro_unitprice_buy + '"/></td>';
-                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="isInt(this)" value="' + object.billinpro_unitprice_buy + '"/></td>';
+                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="calculatePrice(this)" value="' + object.pro_unitprice_buy + '"/></td>';
+                    tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10 uk-form-danger" onchange="isInt(this)" value="' + object.pro_discount + '"/></td>';
                     tr += '<td style="width:8%"><input type="text" class="uk-width-small-9-10" onchange="calculateTotalPrice()" value="' + object.billinpro_totalprice + '"/></td>';
                     tr += '<td><button type="button" class="uk-button uk-button-mini uk-button-danger" onclick="remove_tr(this,' + object.billinpro_id + ')"><i class="uk-icon-trash-o"></i>ลบ</button></td>';
                     tr += '</tr>';
