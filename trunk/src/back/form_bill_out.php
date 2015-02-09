@@ -6,7 +6,7 @@ $customer_onwer = "";
 $customer_address = "";
 $billcode = "";
 $billdate = "";
-$officer = "";
+$salse_name = "";
 $pay_condition = "";
 $receiver = "";
 $sender = "";
@@ -14,18 +14,18 @@ $totalprice = "";
 if (!empty($_GET['id'])) {
     $id = $_GET['id'];
     $sql = " SELECT * FROM bill_out bo";
-    $sql .= " JOIN store_contact sc ON sc.store_id = bo.customer_id";
+    $sql .= " LEFT JOIN store_contact sc ON sc.sto_id = bo.customer_id";
     $sql .= " WHERE billout_id = $id";
     $query = mysql_query($sql) or die(mysql_error());
     $data = mysql_fetch_assoc($query);
 
     $bill_id = $data['billout_id'];
-    $customer_id = $data['store_id'];
-    $customer_onwer = $data['store_onwer'];
-    $customer_address = $data['store_address'];
+    $customer_id = $data['sto_id'];
+    $customer_onwer = $data['sto_onwer'];
+    $customer_address = $data['sto_address'];
     $billcode = $data['billout_code'];
     $billdate = $data['billout_outdate'];
-    $sales_name = $data['sales_name'];
+    $salse_name = $data['salse_name'];
     $pay_condition = $data['pay_id'];
     $receiver = $data['billout_receiver'];
     $sender = $data['billout_sender'];
@@ -82,7 +82,7 @@ if (!empty($_GET['id'])) {
                     <div class="uk-form-row">
                         <label for="input-officer" class="uk-form-label">พนักงานขาย</label>
                         <div class="uk-form-controls">
-                            <input type="text" name="officer" id="input-officer" value="<?= $officer ?>"
+                            <input type="text" name="salse_name" id="input-salse_name" value="<?= $salse_name ?>"
                                    data-validation-engine="validate[required]"
                                    data-errormessage-value-missing="กรุณาเลือก ข้อมูลพนักงานขาย"/>
                         </div>    

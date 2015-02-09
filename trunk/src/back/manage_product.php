@@ -7,8 +7,8 @@
     <table class="uk-table uk-table-condensed uk-table-line dataTable">
         <thead>
             <tr>
-                <!--<th>ปรับสมดุล</th>
-                <th>ลำดับ</th>-->
+                <th>ปรับสมดุล</th>
+                <!--<th>ลำดับ</th>-->
                 <th style="text-align: center">รหัสสินค้า</th>
                 <th style="text-align: center">ชื่อสินค้า</th>
                 <!--<th>อธิบาย</th>-->
@@ -28,40 +28,40 @@
             while ($row = mysql_fetch_array($query)):
                 ?>
                 <tr>
-<!--                    <td>
+                    <td>
                         <a  class="uk-button uk-button-primary uk-button-mini" href="#dialog-adjust_product<?= $row['pro_id'] ?>" data-uk-modal>
                             <i class="uk-icon-edit"></i> ปรับ
                         </a>
-                        <a  class="uk-button uk-button-success uk-button-mini" href="index.php?page=manage_adjust&id=<?= $row['pro_id'] ?>">
+                        <!--   <a  class="uk-button uk-button-success uk-button-mini" href="index.php?page=manage_adjust&id=<?= $row['pro_id'] ?>">
                             <i class="uk-icon-edit"></i> แก้ไข
-                        </a>
-                         modal 
+                        </a>-->
+                        <!--modal -->
                         <div id="dialog-adjust_product<?= $row['pro_id'] ?>" class="uk-modal">
                             <?php
-                            $sql_product = "SELECT * FROM product WHERE pro_id = " . $row['pro_id'];
+                            $sql_product = "SELECT * FROM product WHERE pro_id = " . $row['pro_id'];                          
                             $query_product = mysql_query($sql_product) or die(mysql_error());
                             $data = mysql_fetch_assoc($query_product);
                             ?>
-                             This is the modal 
+                            <!--This is the modal -->
                             <div class="uk-modal-dialog uk-modal-dialog-frameless" style="padding: 20px;">
                                 <a href="" class="uk-modal-close uk-close uk-close-alt"></a>
                                 <div class="uk-panel">
                                     <h3 class="uk-panel-title">ปรับสมดุลสินค้า [<?= $data['pro_name'] ?>]</h3>
 
                                     <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
-                                        <form class="uk-form uk-form-horizontal" id="frm-adjust<?=$row['pro_id']?>">        
+                                        <form class="uk-form uk-form-horizontal" id="frm-adjust<?= $row['pro_id'] ?>">        
                                             <fieldset data-uk-margin>
                                                 <legend>กรอกข้อมูลสินค้า</legend>
                                                 <div class="uk-form-row">
                                                     <label for="input-code" class="uk-form-label">จำนวนคงเหลือ</label>
                                                     <input type="hidden" name="id" id="input-amount" value="" />
-                                                    <input type="hidden" name="pro_id" id="input-amount" value="<?= $data['pro_id']?>" />
+                                                    <input type="hidden" name="pro_id" id="input-amount" value="<?= $data['pro_id'] ?>" />
                                                     <input type="hidden" name="pro_amount" id="input-amount"/>
                                                     <input type="text" name="adj_product_lastamount" id="input-adj_product_lastamount" value="<?= $data['pro_amount'] ?>" readonly/>
                                                 </div>
                                                 <div class="uk-form-row">
                                                     <label for="input-code" class="uk-form-label">ประเภท</label>
-                                                    <?php include '../config/dropdown_adjust_type.php';?>
+                                                    <?php include '../config/dropdown_adjust_type.php'; ?>
                                                 </div>
                                                 <div class="uk-form-row">
                                                     <label for="input-code" class="uk-form-label">จำนวนที่ปรับ</label>
@@ -94,12 +94,12 @@
                         </div>
                         <script type="text/javascript">
                             $(document).ready(function() {
-                                var valid = $('#frm-adjust<?=$row['pro_id']?>').validationEngine('attach', {
+                                var valid = $('#frm-adjust<?= $row['pro_id'] ?>').validationEngine('attach', {
                                     promptPosition: "centerRight",
                                     scroll: false,
                                     onValidationComplete: function(form, status) {
-                                        if (status == true) {
-                                            PostJson('frm-adjust<?=$row['pro_id']?>', '../database/db_adjust.php?method=adjust');
+                                        if (status) {
+                                            PostJson('frm-adjust<?= $row['pro_id'] ?>', '../database/db_adjust.php?method=adjust');
                                         }
                                     }
                                 });
@@ -109,9 +109,8 @@
                                 });
                             });
                         </script>
-                        </div>
-                         modal 
-                    </td>-->
+                        <!--modal -->
+                    </td>
                     <!--<td><?= $row['pro_id'] ?></td>-->
                     <td style="text-align: center"><?= $row['pro_code'] ?></td>
                     <td style="text-align: center"><?= $row['pro_name'] ?></td>

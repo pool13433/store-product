@@ -2,7 +2,7 @@
 include '../config/Connect.php';
 $billin_id = $_GET['billin_id'];
 $sql_bill = "SELECT * FROM bill_in bi";
-$sql_bill .= " LEFT JOIN store_contact sc ON sc.store_id = bi.store_id";
+$sql_bill .= " LEFT JOIN supplier_contact sc ON sc.sup_id = bi.sup_id";
 $sql_bill .= " LEFT JOIN pay_condition pc ON pc.pay_id = bi.pay_id";
 $sql_bill .= " LEFT JOIN person p ON p.per_id = bi.billin_updateby";
 $sql_bill .= " WHERE bi.billin_id = $billin_id";
@@ -12,7 +12,7 @@ $billin_id = $object['billin_id'];
 $billin_invoicescode = $object['billin_invoicescode'];
 $billin_taxcode = $object['billin_taxcode'];
 $billin_indate = $object['billin_indate'];
-$store_id = $object['store_id'];
+$sup_id = $object['sup_id'];
 $store_name = $object['store_name'];
 $store_onwer = $object['store_onwer'];
 $store_address = $object['store_address'];

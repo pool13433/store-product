@@ -43,9 +43,9 @@ if (!empty($_GET['id'])) {
                     <button class="uk-button uk-button-primary uk-button-large" type="submit">
                         <i class="uk-icon-save"></i> บันทึก
                     </button>
-                    <button class="uk-button uk-button-danger uk-button-large" type="button">
+                    <a class="uk-button uk-button-danger uk-button-large" href="index.php?page=manage_type">
                         <i class="uk-icon-arrow-circle-left"></i> ยกเลิก
-                    </button>
+                    </a>
                 </div>
             </div>
         </fieldset>

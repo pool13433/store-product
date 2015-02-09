@@ -19,7 +19,7 @@
             $sql .= " (SELECT COUNT(*) FROM bill_in_product WHERE billin_id = bi.billin_id) count_ptoduct,";
             $sql .= " sc.*";
             $sql .= " FROM bill_in bi";
-            $sql .= " JOIN store_contact sc ON sc.store_id = bi.store_id";
+            $sql .= " LEFT JOIN supplier_contact sc ON sc.sup_id = bi.sup_id";
             $sql .= " ORDER BY bi.billin_id ASC";
             $query = mysql_query($sql) or die(mysql_error());
             while ($data = mysql_fetch_array($query)):
@@ -30,7 +30,7 @@
                     <td><?= $data['billin_doccode'] ?></td>
                     <td><?= $data['billin_indate'] ?></td>
                     <td><?= $data['count_ptoduct'] ?></td>
-                    <td><?= $data['store_name'] ?></td>
+                    <td><?= $data['sup_name'] ?></td>
                     <td style="text-align: right">
                         <a href="../report/report.php?method=report_2-1&billin_id=<?= $data['billin_id'] ?>" class="uk-button uk-button-primary">
                             <i class="uk-icon-print"></i> ออกรายงาน

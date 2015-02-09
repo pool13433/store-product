@@ -46,7 +46,7 @@ if (empty($code)) {
             <div class="uk-form-row">
                 <label for="input-code" class="uk-form-label">รหัสผู้จัดจำหน่าย</label>
                 <div class="uk-form-controls">
-                    <input type="text" name="id" id="input-id" value="<?= $id ?>"/>
+                    <input type="hidden" name="id" id="input-id" value="<?= $id ?>"/>
                     <input type="text" name="code" id="input-code" value="<?= $code ?>" readonly/>
                 </div>
             </div>
