@@ -105,16 +105,16 @@ switch ($_GET['method']) {
             if (count($list_product) > 0):
                 foreach ($list_product as $object):
                     //[{"pro_code":"0000000004","pro_no":"1","pro_price":"1","pro_discount":"1","pro_total_price":"1"}]
-                    $billpro_id = $object['pro_id'];
-                    $pro_name = $object['pro_name'];
-                    $pro_code = $object['pro_code'];
-                    $pro_nobill = $object['pro_noinbill'];
-                    $pro_nocount = $object['pro_nocount'];
-                    $pro_remark = $object['pro_remark'] != "" ? $object['pro_remark'] : "";
-                    $pro_type = $object['pro_type'];
-                    $pro_price = $object['pro_price'];
-                    $pro_discount = $object['pro_discount'];
-                    $pro_total_price = $object['pro_total_price'];
+                    $billpro_id = (empty($object['pro_id']) ? '0' : $object['pro_id']);
+                    $pro_name = (empty($object['pro_name']) ? '-' : $object['pro_name']);
+                    $pro_code = (empty($object['pro_code']) ? '' : $object['pro_code']);
+                    $pro_nobill = (empty($object['pro_noinbill']) ? '0' : $object['pro_noinbill']);
+                    $pro_nocount = (empty($object['pro_nocount']) ? '0' : $object['pro_nocount']);
+                    $pro_remark = (empty($object['pro_remark']) ? '' : $object['pro_remark']);
+                    $pro_type = (empty($object['pro_type']) ? '0' : $object['pro_type']);
+                    $pro_price = (empty($object['pro_price']) ? '0' : $object['pro_price']);
+                    $pro_discount = (empty($object['pro_discount']) ? '0' : $object['pro_discount']);
+                    $pro_total_price = (empty($object['pro_total_price']) ? '0' : $object['pro_total_price']);
 
                     //
                     //#########GET BILL PRODUCT ############                
@@ -284,16 +284,16 @@ switch ($_GET['method']) {
             if (count($list_remove) > 0):
                 if ($approve == 2): // ตรวจสอบการอนุมัติ ถ้า approve == 1 แสดงว่า มีเจ้าหน้าทีอนุมัติ เรียบร้อยแล้ว
                     foreach ($list_remove as $object):
-                        $billpro_id = $object['pro_id'];
-                        $pro_name = $object['pro_name'];
-                        $pro_code = $object['pro_code'];
-                        $pro_nobill = $object['pro_noinbill'];
-                        $pro_nocount = $object['pro_nocount'];
-                        $pro_remark = $object['pro_remark'];
-                        $pro_type = $object['pro_type'];
-                        $pro_price = $object['pro_price'];
-                        $pro_discount = $object['pro_discount'];
-                        $pro_total_price = $object['pro_total_price'];
+                        $billpro_id = (empty($object['pro_id']) ? '' : $object['pro_id']);
+                        $pro_name = (empty($object['pro_name']) ? '' : $object['pro_name']);
+                        $pro_code = (empty($object['pro_code']) ? '' : $object['pro_code']);
+                        $pro_nobill = (empty($object['pro_noinbill']) ? '0' : $object['pro_noinbill']);
+                        $pro_nocount = (empty($object['pro_nocount']) ? '0' : $object['pro_nocount']);
+                        $pro_remark = (empty($object['pro_remark']) ? '' : $object['pro_remark']);
+                        $pro_type = (empty($object['pro_type']) ? '' : $object['pro_type']);
+                        $pro_price = (empty($object['pro_price']) ? '0' : $object['pro_price']);
+                        $pro_discount = (empty($object['pro_discount']) ? '0' : $object['pro_discount']);
+                        $pro_total_price = (empty($object['pro_total_price']) ? '0' : $object['pro_total_price']);
 
                         $product_stock = get_product_no($pro_code);
 
