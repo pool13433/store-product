@@ -31,6 +31,15 @@ if (!empty($_GET['id'])) {
     $sender = $data['billout_sender'];
     $totalprice = $data['billout_total'];
 }
+//################# GENARATE CODE ############
+if (empty($billcode)) {
+    $sql_gen = "SELECT billout_id FROM bill_out ORDER BY billout_id DESC LIMIT 0,1";
+    $query_gen = mysql_query($sql_gen) or die(mysql_error());
+    $result = mysql_fetch_assoc($query_gen);
+    $last_code = $result['billout_id'];    
+    $billcode = Gen_Code(intval($last_code));
+}
+//################# GENARATE CODE ############
 ?>
 <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
     <form class="uk-form uk-form-horizontal" id="frm-bill_out"> 
@@ -65,7 +74,7 @@ if (!empty($_GET['id'])) {
                         <div class="uk-form-controls">
                             <input type="hidden" name="bill_id" id="input-bill_id" value="<?= $bill_id ?>"/>
                             <input type="text" name="billcode" id="input-code" value="<?= $billcode ?>"
-                                   data-validation-engine="validate[required]"
+                                   data-validation-engine="validate[required]" readonly
                                    data-errormessage-value-missing="กรุณากรอก เลขที่เอกสาร"/>
                         </div>    
                     </div>

@@ -149,7 +149,7 @@ if (empty($Invoices_code)) {
                         <label for="input-sup_code" class="uk-form-label">รหัสผู้จัดจำหน่าย</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="sup_id" id="input-sup_id" value="<?= $sup_id ?>"/>
-                            <input type="text" name="sup_name" id="input-sup_code" class="uk-form-danger" value="<?= $sup_code ?>"/>
+                            <input type="text" name="sup_name" id="input-sup_code" class="uk-form-danger" value="<?= $sup_code ?>" readonly/>
                             <a type="button" class="uk-button uk-button-primary" href="#dialog-search_supplier_contact" data-uk-modal ><i class="uk-icon-search-plus"></i>ค้นหา</a>                            
                         </div>
                     </div>
@@ -354,16 +354,25 @@ if (empty($Invoices_code)) {
                 <div class="uk-width-1-3">
                     <div class="uk-form-row">
                         <label for="input-location" class="uk-form-label">ผู้รับสินค้า</label>
-                        <input type="text" class="uk-form-danger uk-width-9-10" name="receiver_name" value="<?= $receiver_name ?>"/>                  
+                        <input type="text" class="uk-form-danger uk-width-9-10" name="receiver_name" 
+                               data-validation-engine="validate[required]"
+                               data-errormessage-value-missing="กรุณากรอก ผู้รับสินค้า"
+                               value="<?= $receiver_name ?>"/>                  
                     </div> 
                 </div>
                 <div class="uk-width-1-3">
                     <label class="uk-form-label">ผู้ส่งสินค้า</label>
-                    <input type="text" class="uk-form-danger uk-width-9-10" name="sender_name" value="<?= $sender_name ?>"/>
+                    <input type="text" class="uk-form-danger uk-width-9-10" name="sender_name" 
+                           data-validation-engine="validate[required]"
+                           data-errormessage-value-missing="กรุณากรอก ผู้ส่งสินค้า"
+                           value="<?= $sender_name ?>"/>
                 </div>
                 <div class="uk-width-1-3">
                     <label class="uk-form-label">ผู้รับมอบอำนาจ</label>
-                    <input type="text" class="uk-form-danger uk-width-9-10" name="autherized_name" value="<?= $autherized_name ?>"/>
+                    <input type="text" class="uk-form-danger uk-width-9-10" name="autherized_name" 
+                           data-validation-engine="validate[required]"
+                           data-errormessage-value-missing="กรุณากรอก ผู้รับมอบอำนาจ"
+                           value="<?= $autherized_name ?>"/>
                 </div>
             </div>
             <hr/>
@@ -372,7 +381,10 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
-                            <input type="checkbox" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_1?> value="1"/>                  
+                            <input type="checkbox" class="uk-form-danger uk-width-9-10" 
+                                   data-validation-engine="validate[required]"
+                                   data-errormessage-value-missing="กรุณากรอก เลือก"
+                                   name="approve" <?= $bill_status_1 ?> value="1"/>                  
                             รออนุมัติการรับของเข้าคลังสินค้า [ผ่านการตรวจรับจากพนักงานประจาโกดังแล้ว]
                         </div> 
                     </div>
@@ -382,7 +394,10 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
-                            <input type="checkbox" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_2?> value="2"/>                  
+                            <input type="checkbox" class="uk-form-danger uk-width-9-10" 
+                                   data-validation-engine="validate[required]"
+                                   data-errormessage-value-missing="กรุณากรอก เลือก"
+                                   name="approve" <?= $bill_status_2 ?> value="2"/>                  
                             รออนุมัติการรับของเข้าคลังสินค้า [ผ่านการสอบจากพนักงานประจาหน้าร้านแล้ว]
                         </div> 
                     </div>
@@ -391,7 +406,10 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">
-                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_3?> value="3"/>                  
+                            <input type="radio" class="uk-form-danger uk-width-9-10" 
+                                   data-validation-engine="validate[required]"
+                                   data-errormessage-value-missing="กรุณากรอก เลือก"
+                                   name="approve" <?= $bill_status_3 ?> value="3"/>                  
                             อนุมัติการรับของเข้าคลังสินค้า ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
                         </div> 
                     </div>
@@ -400,7 +418,10 @@ if (empty($Invoices_code)) {
                 <div class="uk-grid">
                     <div class="uk-width-4-4">
                         <div class="uk-form-row">                            
-                            <input type="radio" class="uk-form-danger uk-width-9-10" name="approve" <?=$bill_status_4?> value="4"/>                  
+                            <input type="radio" class="uk-form-danger uk-width-9-10" 
+                                   data-validation-engine="validate[required]"
+                                   data-errormessage-value-missing="กรุณากรอก เลือก"
+                                   name="approve" <?= $bill_status_4 ?> value="4"/>                  
                             อนุมัติการรับของเข้าคลังสินค้า ไม่ผ่าน (ถ้าเลือกแล้วจะไม่สามารถ ปรับแกไข้ ใบบิลได้อีก)
                         </div> 
                     </div>
